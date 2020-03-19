@@ -39,6 +39,13 @@ export const FormInput = styled.input`
   color: #000;
   padding-left: 15px;
   margin-bottom: 15px;
+  border: 1px solid #000;
+  transition: .2s;
+  &:focus {
+    color: #0078D7;
+    border: 1px solid #0078D7;
+    font-weight: 800;
+  }
 `;
 
 export const FormError = styled.p`
@@ -60,8 +67,11 @@ export const FormButton = styled.button`
   text-transform: uppercase;
   font-size: 25px;
   transition: .2s;
+  margin-bottom: 5px;
   &:hover {
-    background: #F0F0F0;
+    background: #0078D7;
+    color: #fff;
+    border: none;
   }
   &:active {
     background: transparent;
@@ -73,4 +83,26 @@ export const LoginBlocker = styled.div`
   height: 65px;
   position: absolute;
   bottom: 52px;
+`;
+
+export const RegisterBlocker = styled.div`
+  width: 150px;
+  height: 70px;
+  position: absolute;
+  bottom: 52px;
+`;
+
+export const FormLink = styled.p`
+  font-size: 18px;
+  & span {
+    text-transform: uppercase;
+    font-weight: 800;
+    & * {
+      color: #0078D7;
+      transition: .2s;
+      &:hover {
+        color: #004EAD;
+      }
+    }
+  }
 `;

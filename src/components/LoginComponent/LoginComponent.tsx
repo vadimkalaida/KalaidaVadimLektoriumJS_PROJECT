@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MainBlock, Title, Form, FormInput, FormError, FormButton, LoginBlocker } from "../../elements";
+import { MainBlock, Title, Form, FormInput, FormError, FormButton, LoginBlocker, FormLink } from "../../elements";
 import validator from "validator";
+import { Link } from "react-router-dom";
 
 const LoginComponent : React.FC = () => {
   const [ loginEmail, setLoginEmail ] : React.ComponentState = useState('');
@@ -65,13 +66,13 @@ const LoginComponent : React.FC = () => {
       setLoginEmailError('');
     }
 
-    if(loginPassword.length < 6 || !testLetters.test(loginPassword) || !testNumber.test(loginPassword) || loginPassword.length > 24) {
+    if(loginPassword.length < 8 || !testLetters.test(loginPassword) || !testNumber.test(loginPassword) || loginPassword.length > 24) {
       setLoginPassError('Oops, looks like password is incorrect.')
     } else {
       setLoginPassError('');
     }
 
-    if(!validator.isEmail(loginEmail) || loginPassword.length < 6 || !testLetters.test(loginPassword) || !testNumber.test(loginPassword) || loginPassword.length > 24) {
+    if(!validator.isEmail(loginEmail) || loginPassword.length < 8 || !testLetters.test(loginPassword) || !testNumber.test(loginPassword) || loginPassword.length > 24) {
       setLoginBlocker(1);
     } else {
       setLoginBlocker(0);
@@ -91,36 +92,35 @@ const LoginComponent : React.FC = () => {
 
     sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/login', 'POST', header, body)
       .then(data => {
-        console.log(data)
-        sessionStorage.setItem('userLoggedIN', '1')
+        console.log(data);
+        sessionStorage.setItem('userLoggedIN', '1');
+        setLoginEmail('');
+        setLoginPassword('');
+        sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
+          .then(data => {
+            let dbUsers : Array<any> = data,
+              checkEmailNumber : number = 0;
+
+            localStorage.setItem('users', JSON.stringify(dbUsers));
+
+            for(let i = 0; i < dbUsers.length; i++) {
+              if (loginEmail === dbUsers[i].email) {
+                checkEmailNumber = i;
+                i = dbUsers.length - 1;
+              }
+            }
+            if(sessionStorage.getItem('userLoggedIN') === '1') {
+              setShowNumber(1);
+              localStorage.setItem('lektorium_login_user_id', '');
+              localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id)
+            }
+          })
       })
       .catch(err => {
         console.log(err);
         sessionStorage.setItem('userLoggedIN', '0');
         alert('Account was not found or password is incorrect!');
       });
-
-    sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
-      .then(data => {
-        let dbUsers : Array<any> = data,
-          checkEmailNumber : number = 0;
-
-        localStorage.setItem('users', JSON.stringify(dbUsers))
-
-        for(let i = 0; i < dbUsers.length; i++) {
-          if (loginEmail === dbUsers[i].email) {
-            checkEmailNumber = i;
-            i = dbUsers.length - 1;
-          }
-        }
-        if(sessionStorage.getItem('userLoggedIN') === '2') {
-          setShowNumber(1);
-          localStorage.setItem('lektorium_login_user_id', '');
-          localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id)
-        }
-        setLoginEmail('');
-        setLoginPassword('');
-      })
   };
 
   return(
@@ -133,6 +133,9 @@ const LoginComponent : React.FC = () => {
         <FormError>{loginPassError}</FormError>
         { loginBlocker === 1 ? <LoginBlocker></LoginBlocker> : null }
         <FormButton onClick={Login}>Sign In</FormButton>
+        <FormLink>
+          You can <span><Link to={'/register'}>Register</Link></span> or <span><Link to={'/resetPass'}>Reset Password</Link></span>
+        </FormLink>
       </Form>
     </MainBlock>
   );
