@@ -13,7 +13,6 @@ const LoginComponent : React.FC = () => {
   const [ showNumber, setShowNumber ] : React.ComponentState = useState(0);
   const testLetters : RegExp = /[a-zA-Z]/;
   const testNumber : RegExp = /[0-9]/;
-  sessionStorage.setItem('userLoggedIN', '0');
 
   const sendRequest = async (url : string, method : any, headers : any, body : any) : Promise<any> => {
     return await fetch(url, {
