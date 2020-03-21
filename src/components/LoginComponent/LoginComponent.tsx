@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MainBlock, Title, Form, FormInput, FormError, FormButton, LoginBlocker, FormLink } from "../../elements";
+import { GoToHomeLink } from "./elements";
 import validator from "validator";
 import { Link } from "react-router-dom";
 
@@ -94,6 +95,7 @@ const LoginComponent : React.FC = () => {
       .then(data => {
         console.log(data);
         sessionStorage.setItem('userLoggedIN', '1');
+        setShowNumber(1);
         setLoginEmail('');
         setLoginPassword('');
         sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
@@ -137,6 +139,7 @@ const LoginComponent : React.FC = () => {
           You can <span><Link to={'/register'}>Register</Link></span> or <span><Link to={'/resetPass'}>Reset Password</Link></span>
         </FormLink>
       </Form>
+      { showNumber === 1 ? <GoToHomeLink><Link to={'/home'}>Home</Link></GoToHomeLink> : null }
     </MainBlock>
   );
 };

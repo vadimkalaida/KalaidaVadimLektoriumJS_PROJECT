@@ -106,3 +106,25 @@ export const FormLink = styled.p`
     }
   }
 `;
+
+export const ErrorBlock = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  & * {
+    font-size: 26px;
+    font-weight: 800;
+    transition: .2s;
+    color: #0078D7;
+    letter-spacing: 1.25px;
+  }
+  & *:hover {
+    color: #004EAD;
+  }
+  & *:active {
+    color: #0078D7;
+  }
+`;
