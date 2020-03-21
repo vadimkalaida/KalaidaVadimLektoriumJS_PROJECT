@@ -31,4 +31,6 @@ export const HomeParagraph = styled.p`
   font-size: 32px;
   font-weight: 800;
   letter-spacing: 1.5px;
+  margin-top: 0;
+  color: #197AD3;
 `;

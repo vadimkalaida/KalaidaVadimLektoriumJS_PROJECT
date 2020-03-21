@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ErrorBlock } from "../../elements";
 import { MainHomeBlock, Header, HomeParagraph } from "./styles/elements";
 import { UserInfoParagraph, UserInfoLink } from "./styles/infoOfUserBlockElements";
+import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid } from 'recharts';
 
 const HomeComponent = () => {
   const [ showBlock, setShowBlock ] : React.ComponentState = useState('home');
@@ -10,11 +11,44 @@ const HomeComponent = () => {
   const [ formConstructorButtonColor, setFormConstructorButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   const [ userInfoButtonColor, setUserInfoButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   let userLoggedIN : any = sessionStorage.getItem('userLoggedIN');
+  const barData = [
+    {
+      name: '2015',
+      uv: 900
+    },
+    {
+      name: '2016',
+      uv: 1100
+    },
+    {
+      name: '2017',
+      uv: 1500
+    },
+    {
+      name: '2018',
+      uv: 2000
+    },
+    {
+      name: '2019',
+      uv: 2700
+    },
+    {
+      name: '2020',
+      uv: 3300
+    }
+  ];
 
   const homeBlockContent = () => {
     return(
       <>
-        <HomeParagraph>You are at HOME page</HomeParagraph>
+        <HomeParagraph>Users Statistic</HomeParagraph>
+        <ResponsiveContainer width={700}>
+          <BarChart data={barData}>
+            <XAxis dataKey="name" stroke={'#0F79D5'} />
+            <CartesianGrid horizontal={true} vertical={false} stroke="#0F79D5" />
+            <Bar dataKey="uv" barSize={50} fill="#0F79D5"/>
+          </BarChart>
+        </ResponsiveContainer>
       </>
     );
   };
