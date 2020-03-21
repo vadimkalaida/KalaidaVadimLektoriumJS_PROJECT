@@ -53,6 +53,20 @@ const HomeComponent = () => {
     );
   };
 
+  const toDoList = () => {
+    return(
+      <>
+      </>
+    );
+  };
+
+  const usersInformation = () => {
+    return(
+      <>
+      </>
+    );
+  };
+
   const formConstructorBlock = () => {
     return(
       <>
