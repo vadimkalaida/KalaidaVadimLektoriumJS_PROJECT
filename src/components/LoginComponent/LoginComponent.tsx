@@ -97,31 +97,33 @@ const LoginComponent : React.FC = () => {
         setShowNumber(1);
         setLoginEmail('');
         setLoginPassword('');
-        sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
-          .then(data => {
-            let dbUsers : Array<any> = data,
-              checkEmailNumber : number = 0;
-
-            localStorage.setItem('users', JSON.stringify(dbUsers));
-
-            for(let i = 0; i < dbUsers.length; i++) {
-              if (loginEmail === dbUsers[i].email) {
-                checkEmailNumber = i;
-                i = dbUsers.length - 1;
-              }
-            }
-            if(sessionStorage.getItem('userLoggedIN') === '1') {
-              setShowNumber(1);
-              localStorage.setItem('lektorium_login_user_id', '');
-              localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id)
-            }
-          })
       })
       .catch(err => {
         console.log(err);
         sessionStorage.setItem('userLoggedIN', '0');
         alert('Account was not found or password is incorrect!');
       });
+    if(sessionStorage.getItem('userLoggedIN') === '1') {
+      sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
+        .then(data => {
+          let dbUsers : Array<any> = data,
+            checkEmailNumber : number = 0;
+
+          localStorage.setItem('users', JSON.stringify(dbUsers));
+
+          for(let i = 0; i < dbUsers.length; i++) {
+            if (loginEmail === dbUsers[i].email) {
+              checkEmailNumber = i;
+              i = dbUsers.length - 1;
+            }
+          }
+          if(sessionStorage.getItem('userLoggedIN') === '1') {
+            setShowNumber(1);
+            localStorage.setItem('lektorium_login_user_id', '');
+            localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id)
+          }
+        })
+    }
   };
 
   return(
