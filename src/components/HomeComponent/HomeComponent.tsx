@@ -6,6 +6,8 @@ import { UserInfoParagraph, UserInfoLink } from "./styles/infoOfUserBlockElement
 import { AddToDoBlock, AddToDoTitle, AddToDoInput, AddToDoButtonBlocker, AddToDoButton, ToDoItemsBlock, ToDoItem } from "./styles/toDoElements";
 import { FindUserForm, FindUserTitle, FindUserInput, FindUserButton, FoundUsersBlock, FoundUserParagraph, UserNotFound,
   UserInfoBlock, FoundUserInfoParagraph } from "./styles/usersElements";
+import { ProjectsBlock, ProjectsTitle, Project, ProjectParagraph, DeleteProjectParagraph } from "./styles/projectsElements";
+import formatDate from "../../services/formatDate";
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid } from 'recharts';
 
 const HomeComponent = () => {
@@ -15,6 +17,8 @@ const HomeComponent = () => {
   const [ todoUsersButtonColor, setToDoUsersButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   const [ formConstructorButtonColor, setFormConstructorButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   const [ usersButtonColor, setUsersButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
+  const [ projectsButtonColor, setProjectsButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
+  const [ addProjectButtonColor, setAddProjectButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   const [ userInfoButtonColor, setUserInfoButtonColor ] : React.ComponentState = useState({background: 'transparent', color: '#000'});
   const [ todoArray, setTodoArray ] : React.ComponentState = useState([]);
   const [ todoArrayLength, setTodoArrayLength ] : React.ComponentState = useState(todoArray.length);
@@ -262,7 +266,101 @@ const HomeComponent = () => {
   };
   //Users Information Code Part (END)
 
+  //Projects Code Part (START)
+  const sendRequestGetProjects = async (url : string, body = null) : Promise<any> => {
+    return await fetch(url, {
+      method: 'GET',
+      headers: {
+        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'
+      }
+    })
+      .then(response => {
+        if(response.ok) {
+          return response.json();
+        }
+        return response.json()
+          .then(error => {
+            const err : any = new Error('Something went wrong');
+            err.data = error;
+            throw err;
+          })
+      })
+  };
 
+  const sendRequestDelProject = async (url : string, body = null) => {
+    return await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    })
+      .then(response => {
+        if(response.ok) {
+          return response.json();
+        }
+        return response.json()
+          .then(error => {
+            const err : any = new Error('Something went wrong');
+            err.data = error;
+            throw err;
+          })
+      })
+  };
+
+  const showProjects = () => {
+    sendRequestGetProjects('https://geekhub-frontend-js-9.herokuapp.com/api/projects')
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('projects_array', JSON.stringify(data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    let projectsArray : any = [];
+
+    let localStorageProjects : any = localStorage.getItem('projects_array');
+    let parsedLocalStorageProjects : any = JSON.parse(localStorageProjects);
+
+    for(let i : number = 0; i < parsedLocalStorageProjects.length; i++) {
+      if(parsedLocalStorageProjects[i].assigned !== null) {
+        projectsArray.push(parsedLocalStorageProjects[i])
+      }
+    }
+
+    localStorage.setItem('sorted_projects_array', JSON.stringify(projectsArray));
+
+    return(
+      <>
+        <ProjectsBlock>
+          <ProjectsTitle>Projects</ProjectsTitle>
+          { projectsArray.map( (item : any, index : number) => <Project key={index}>
+            <ProjectParagraph>Title: <span>{ item.title }</span></ProjectParagraph>
+            <ProjectParagraph>Company: <span>{ item.company }</span></ProjectParagraph>
+            <ProjectParagraph>Cost: <span>{ item.cost }</span></ProjectParagraph>
+            <ProjectParagraph>Deadline: <span>{ formatDate(item.deadline) }</span></ProjectParagraph>
+            <ProjectParagraph>Author: <span>{ localStorage.getItem('lektorium_login_user_id') === item.assigned._id ? 'Me' : item.assigned.name }</span></ProjectParagraph>
+            { localStorage.getItem('lektorium_login_user_id') === item.assigned._id ? <DeleteProjectParagraph onClick={() => {
+              sendRequestDelProject(`https://geekhub-frontend-js-9.herokuapp.com/api/projects/${item._id}`)
+                .then(data => {
+                  console.log(data);
+                  alert('Project was deleted! Please reload webpage to see changes!');
+                })
+                .catch(err => {
+                  console.log(err);
+                })}
+            }>Delete Project</DeleteProjectParagraph> : null }
+          </Project> ) }
+        </ProjectsBlock>
+      </>
+    );
+  };
+  //Projects Code Part (END)
+
+  //Add Project Code Part (START)
+  const addProject = () => {
+
+  };
+  //Add Project Code Part (END)
 
   //Info Of User Code Part (START)
   const infoOfUserBlock = () => {
@@ -303,6 +401,8 @@ const HomeComponent = () => {
             setToDoUsersButtonColor({background: 'transparent', color: '#000'});
             setFormConstructorButtonColor({background: 'transparent', color: '#000'});
             setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
             setUserInfoButtonColor({background: 'transparent', color: '#000'});
           }}>Home</button>
           <button style={todoUsersButtonColor} onClick={() => {
@@ -312,6 +412,8 @@ const HomeComponent = () => {
             setFormConstructorButtonColor({background: 'transparent', color: '#000'});
             setUsersButtonColor({background: 'transparent', color: '#000'});
             setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
             setUserInfoButtonColor({background: 'transparent', color: '#000'});
           }}>ToDo</button>
           <button style={formConstructorButtonColor} onClick={() => {
@@ -320,6 +422,8 @@ const HomeComponent = () => {
             setToDoUsersButtonColor({background: 'transparent', color: '#000'});
             setFormConstructorButtonColor({background: '#0078D7', color: '#fff'});
             setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
             setUserInfoButtonColor({background: 'transparent', color: '#000'});
           }}>Form Constructor</button>
           <button style={usersButtonColor} onClick={() => {
@@ -328,14 +432,38 @@ const HomeComponent = () => {
             setToDoUsersButtonColor({background: 'transparent', color: '#000'});
             setFormConstructorButtonColor({background: 'transparent', color: '#000'});
             setUsersButtonColor({background: '#0078D7', color: '#fff'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
             setUserInfoButtonColor({background: 'transparent', color: '#000'});
           }}>Users</button>
+          <button style={projectsButtonColor} onClick={() => {
+            setShowBlock('projects');
+            setHomeButtonColor({background: 'transparent', color: '#000'});
+            setToDoUsersButtonColor({background: 'transparent', color: '#000'});
+            setFormConstructorButtonColor({background: 'transparent', color: '#000'});
+            setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: '#0078D7', color: '#fff'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
+            setUserInfoButtonColor({background: 'transparent', color: '#000'});
+          }}>Projects</button>
+          <button style={addProjectButtonColor} onClick={() => {
+            setShowBlock('add_project');
+            setHomeButtonColor({background: 'transparent', color: '#000'});
+            setToDoUsersButtonColor({background: 'transparent', color: '#000'});
+            setFormConstructorButtonColor({background: 'transparent', color: '#000'});
+            setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: '#0078D7', color: '#fff'});
+            setUserInfoButtonColor({background: 'transparent', color: '#000'});
+          }}>Add Project</button>
           <button style={userInfoButtonColor} onClick={() => {
             setShowBlock('info_of_user');
             setHomeButtonColor({background: 'transparent', color: '#000'});
             setToDoUsersButtonColor({background: 'transparent', color: '#000'});
             setFormConstructorButtonColor({background: 'transparent', color: '#000'});
             setUsersButtonColor({background: 'transparent', color: '#000'});
+            setProjectsButtonColor({background: 'transparent', color: '#000'});
+            setAddProjectButtonColor({background: 'transparent', color: '#000'});
             setUserInfoButtonColor({background: '#0078D7', color: '#fff'});
           }}>User Info</button>
         </Header>
@@ -343,6 +471,8 @@ const HomeComponent = () => {
         { showBlock === 'todo_list' ? toDoList() : null }
         { showBlock === 'form_constructor' ? formConstructorBlock() : null }
         { showBlock === 'users' ? usersInformation() : null }
+        { showBlock === 'projects' ? showProjects() : null }
+        { showBlock === 'add_project' ? addProject() : null }
         { showBlock === 'info_of_user' ? infoOfUserBlock() : null }
       </MainHomeBlock>
     )
