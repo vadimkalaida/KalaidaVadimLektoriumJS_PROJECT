@@ -4,14 +4,14 @@ export const GoToHomeLink = styled.p`
   font-size: 26px;
   font-weight: 800;
   & * {
-    color: #0078D7;
+    color: #B2FEFA;
     transition: .2s;
     letter-spacing: 1.25px;
   }
   & *:hover {
-    color: #004EAD;
+    color: #126CD7;
   }
   & *:active {
-    color: #0078D7;
+    color: #B2FEFA;
   }
 `;

@@ -3,7 +3,11 @@ import styled from 'styled-components';
 export const ProjectsBlock = styled.div`
   width: 700px;
   max-height: 700px;
-  background: #FF9800;
+  background: #FF416C;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FF4B2B, #FF416C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
   border: 2px solid #AC4500;
   display: flex;
   flex-direction: column;
@@ -32,7 +36,7 @@ export const Project = styled.div`
 `;
 
 export const ProjectParagraph = styled.p`
-  color: #872008;
+  color: #B0001D;
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -43,7 +47,11 @@ export const ProjectParagraph = styled.p`
 `;
 
 export const DeleteProjectParagraph = styled.p`
-  color: #FF3846;
+  background: #FF416C;
+  background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+  background: linear-gradient(to right, #FF4B2B, #FF416C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: 22px;
   font-weight: 800;
   transition: .2s;

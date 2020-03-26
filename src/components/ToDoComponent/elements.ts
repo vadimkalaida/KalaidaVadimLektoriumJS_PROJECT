@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const AddToDoBlock = styled.form`
   width: 700px;
@@ -7,8 +7,10 @@ export const AddToDoBlock = styled.form`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: #0F79D5;
-  border: 2px solid #002B87;
+  background: #667db6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: 2px solid #5012DD;
   margin-bottom: 30px;
   position: relative;
 `;
@@ -26,19 +28,19 @@ export const AddToDoInput = styled.input`
   width: 85%;
   height: 50px;
   outline: none;
-  background: #fff;
+  background: #005295;
   font-size: 22px;
   padding-left: 15px;
-  color: #002B87;
+  color: #4FADD9;
   border: 2px solid #002B87;
   transition: .2s
 `;
 
 export const AddToDoButtonBlocker = styled.div`
   width: 150px;
-  height: 60px;
+  height: 70px;
   position: absolute;
-  bottom: 50px;
+  bottom: 45px;
 `;
 
 export const AddToDoButton = styled.button`
@@ -46,8 +48,8 @@ export const AddToDoButton = styled.button`
   height: 50px;
   margin-top: 30px;
   cursor: pointer;
-  background: #fff;
-  color: #002B87;
+  background: #005295;
+  color: #4FADD9;
   text-transform: uppercase;
   font-size: 20px;
   font-weight: 800;
@@ -62,13 +64,16 @@ export const AddToDoButton = styled.button`
 
 export const ToDoItemsBlock = styled.div`
   width: 700px;
-  min-height: 150px;
-  background: #0F79D5;
-  border: 2px solid #002B87;
+  height: 350px;
+  background: #667db6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: 2px solid #5012DD;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  overflow-y: auto;
 `;
 
 export const ToDoItem = styled.div`
@@ -83,6 +88,9 @@ export const ToDoItem = styled.div`
     height: 100%;
     cursor: pointer;
     font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   & span *:hover {
     transition: .2s;
