@@ -11,6 +11,7 @@ export const AddToDoBlock = styled.form`
   background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: 2px solid #5012DD;
+  border-radius: 15px;
   margin-bottom: 30px;
   position: relative;
 `;
@@ -69,6 +70,7 @@ export const ToDoItemsBlock = styled.div`
   background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: 2px solid #5012DD;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -56,7 +56,6 @@ export const FormInput = styled.input`
 `;
 
 export const FormError = styled.p`
-  color: #FF0800;
   font-weight: 800;
   margin-top: 0;
   margin-bottom: 15px;
