@@ -27,7 +27,7 @@ const AddProjectComponent : React.FC = () => {
 
   return(
     <>
-      <HeaderComponent />
+      <HeaderComponent pageNameProps={'add_project'}  />
       <AddProjectForm>
 
       </AddProjectForm>

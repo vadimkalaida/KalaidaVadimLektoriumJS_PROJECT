@@ -3,11 +3,9 @@ import styled from 'styled-components';
 export const ProjectsBlock = styled.div`
   width: 700px;
   max-height: 700px;
-  background: #FF416C;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #FF4B2B, #FF416C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+  background: #FF416C;
+  background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+  background: linear-gradient(to right, #FF4B2B, #FF416C);
   border: 2px solid #AC4500;
   display: flex;
   flex-direction: column;

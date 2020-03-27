@@ -107,10 +107,9 @@ const UsersComponent : React.FC = () => {
     );
   };
 
-
   return(
     <>
-      <HeaderComponent />
+      <HeaderComponent buttonTextColorProps={'#F01FFF'} pageNameProps={'users'} buttonBackgroundProps={'#3D1F6F'} />
       { usersInformation() }
     </>
   );

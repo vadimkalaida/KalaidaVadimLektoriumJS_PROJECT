@@ -32,7 +32,7 @@ const UserInfoComponent : React.FC = () => {
 
   return(
     <MainHomeBlock>
-      <HeaderComponent />
+      <HeaderComponent buttonTextColorProps={'#FEFADD'} pageNameProps={'user_info'} buttonBackgroundProps={'#A47493'} />
       { infoOfUserBlock() }
     </MainHomeBlock>
   );

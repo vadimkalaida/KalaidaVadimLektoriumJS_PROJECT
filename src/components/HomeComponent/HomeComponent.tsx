@@ -55,7 +55,7 @@ const HomeComponent = () => {
   const mainHomeBlock = () => {
     return(
       <MainHomeBlock>
-        <HeaderComponent />
+        <HeaderComponent pageNameProps={'home'} />
         { homeBlockContent() }
       </MainHomeBlock>
     )

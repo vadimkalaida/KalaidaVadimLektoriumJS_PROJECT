@@ -102,7 +102,7 @@ const ProjectsComponent : React.FC = () => {
 
   return(
     <MainHomeBlock>
-      <HeaderComponent />
+      <HeaderComponent buttonTextColorProps={'#F5005C'} pageNameProps={'projects'} buttonBackgroundProps={'#750000'} />
       { showProjects() }
     </MainHomeBlock>
   );

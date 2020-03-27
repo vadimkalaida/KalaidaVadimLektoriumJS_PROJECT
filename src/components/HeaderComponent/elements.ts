@@ -23,10 +23,4 @@ export const Header = styled.div`
       color: #26C0DC;
     }
   }
-  & button:hover {
-    background: #26C0DC;
-    & * {
-      color: #fff;
-    }
-  }
 `;

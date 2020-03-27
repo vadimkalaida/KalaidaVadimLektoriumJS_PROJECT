@@ -4,7 +4,7 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 const FormConstructorComponent : React.FC = () => {
   return(
     <>
-      <HeaderComponent />
+      <HeaderComponent pageNameProps={'form_constructor'} />
     </>
   );
 };

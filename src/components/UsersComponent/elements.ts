@@ -67,7 +67,6 @@ export const FoundUsersBlock = styled.div`
   min-height: 250px;
   border: 2px solid #002B87;
   border-radius: 15px;
-  background: #9550F5;
   display: flex;
   flex-direction: column;
   align-items: center;

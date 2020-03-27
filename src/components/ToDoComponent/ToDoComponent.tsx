@@ -96,7 +96,7 @@ const ToDoComponent : React.FC = () => {
 
   return(
     <>
-      <HeaderComponent />
+      <HeaderComponent buttonTextColorProps={'#6EE1E2'} pageNameProps={'todo'} buttonBackgroundProps={'#005D5E'} />
       { toDoList() }
     </>
   );
