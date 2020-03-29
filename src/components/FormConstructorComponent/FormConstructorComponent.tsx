@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
-import { FormConstructor, FormConstructorTitle, FormConstructorInputBlock, FormConstructorInput, FormConstructorTip, FormConstructorAddInput } from './elements'
+import { FormConstructor, FormConstructorTitle, FormConstructorInputBlock, FormConstructorInput, FormConstructorTip, FormConstructorAddInput, DropDownMenu } from './elements'
 
 const FormConstructorComponent : React.FC = () => {
   const [ inputType, setInputType ] : React.ComponentState = useState('Type:');
@@ -46,6 +46,84 @@ const FormConstructorComponent : React.FC = () => {
     console.log(formComponentsArray);
   };
 
+  const handleInputNameChange = ( event : any ) => {
+    setInputName(event.target.value);
+  };
+
+  const handleInputPlaceholderChange = ( event : any ) => {
+    setInputPlaceholder(event.target.value);
+  };
+
+  const handleInputColorChange = ( event : any ) => {
+    setInputColor(event.target.value);
+  };
+
+  const handleInputBGChange = ( event : any ) => {
+    setInputBG(event.target.value);
+  };
+
+  const handleInputRequiredClick = (event : any) => {
+    if(event.target.checked) {
+      setInputRequiredNumber(1);
+    } else {
+      setInputRequiredNumber(0);
+    }
+    console.log(inputRequiredNumber);
+  };
+
+  const handleInputBorderColorChange = (event : any) => {
+    setInputBorderColor(event.target.value);
+  };
+
+  const addInput = (e : any) => {
+    e.preventDefault();
+
+    if(inputType === 'Type:' || inputName.length < 1 || inputColor.length > 7 || inputBorderColor.length > 7) {
+      alert('Please, choose type of input, write name of input or inputColor.length > 7 or inputBG.length > 7!');
+    } else {
+      // if(localStorage.getItem('forms_array')) {
+      //   let unsortedFormsArray : any = localStorage.getItem('forms_array');
+      //   let formsArray = JSON.parse(unsortedFormsArray);
+      // } else {
+      //   let formsArray = [];
+      // }
+      let inputObject : any = {its: 'input', type: inputType, name: inputName, placeholder: '', inputColor: '#ffffff', inputBG: 'transparent', inputBorderColor: '#297CC1', required: 0};
+
+      if(inputPlaceholder.length > 0) {
+        inputObject.placeholder = inputPlaceholder;
+      }
+
+      if(inputColor.length > 3) {
+        inputObject.inputColor = inputColor;
+      }
+
+      if(inputBG.length > 3) {
+        inputObject.inputBG = inputBG;
+      }
+
+      if(inputBorderColor.length > 3) {
+        inputObject.inputBorderColor = inputBorderColor;
+      }
+
+      if(inputRequiredNumber === 1) {
+        inputObject.required = inputRequiredNumber;
+      }
+
+      formComponentsArray.push(inputObject);
+
+      alert('Input was added!');
+
+      console.log(formComponentsArray);
+
+      setInputType('Type:');
+      setInputName('');
+      setInputPlaceholder('');
+      setInputColor('');
+      setInputBG('');
+      setInputBorderColor('');
+    }
+  };
+
   return(
     <>
       <HeaderComponent pageNameProps={'form_constructor'} />
@@ -55,8 +133,32 @@ const FormConstructorComponent : React.FC = () => {
         <FormConstructorTitle>Title</FormConstructorTitle>
         <FormConstructorInputBlock>
           <FormConstructorInput type={'text'} id={'formTitle'} name={'formTitle'} value={formTitle} onChange={handleFormTitleChange} placeholder={'Title'} />
-          <FormConstructorAddInput onClick={addTitle}>Add Title</FormConstructorAddInput>
         </FormConstructorInputBlock>
+        <FormConstructorAddInput onClick={addTitle}>Add Title</FormConstructorAddInput>
+
+        <FormConstructorTitle>Input</FormConstructorTitle>
+        <FormConstructorInputBlock>
+          <DropDownMenu>
+            <p>{ inputType }</p>
+            <div>
+              <p onClick={() => {setInputType('email')}}>email</p>
+              <p onClick={() => {setInputType('text')}}>text</p>
+              <p onClick={() => {setInputType('password')}}>password</p>
+              <p onClick={() => {setInputType('number')}}>number</p>
+              <p onClick={() => {setInputType('checkbox')}}>checkbox</p>
+              <p onClick={() => {setInputType('submit')}}>submit</p>
+              <p onClick={() => {setInputType('button')}}>button</p>
+            </div>
+          </DropDownMenu>
+          <FormConstructorInput type={'text'} id={'inputName'} name={'inputName'} onChange={handleInputNameChange} value={ inputName } placeholder={'*name'} />
+          <FormConstructorInput type={'text'} id={'inputPlaceholder'} name={'inputPlaceholder'} onChange={handleInputPlaceholderChange} value={ inputPlaceholder } placeholder={'placeholder'} />
+          <FormConstructorInput type={'text'} id={'inputColor'} name={'inputColor'} onChange={handleInputColorChange} value={ inputColor } placeholder={'color(#0E57AA)'} />
+          <FormConstructorInput style={{width: 225, marginRight: 10}} type={'text'} id={'inputBG'} name={'inputBG'} onChange={handleInputBGChange} value={ inputBG } placeholder={'BG color(#0E57AA)'} />
+          <FormConstructorInput style={{width: 225, marginLeft: 10}} type={'text'} id={'inputBorderColor'} name={'inputBorderColor'} onChange={handleInputBorderColorChange} value={ inputBorderColor } placeholder={'Border color(#0E57AA)'} />
+          <FormConstructorInput style={{marginLeft: 20}} type={'checkbox'} id={'inputRequired'} onClick={handleInputRequiredClick} name={'inputRequired'} />
+        </FormConstructorInputBlock>
+        <FormConstructorAddInput onClick={addTitle}>Add Input</FormConstructorAddInput>
+
 
       </FormConstructor>
     </>

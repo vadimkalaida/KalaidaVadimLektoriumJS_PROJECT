@@ -83,7 +83,7 @@ const LoginComponent : React.FC = () => {
   const Login = (e : any) => {
     e.preventDefault();
 
-    alert('If button "Sign in" doesn\'t work, please wait...');
+    alert('If button "Sign in" doesn\'t work, please wait or click again...');
 
     let header = {'Content-Type': 'application/json'},
     body = {

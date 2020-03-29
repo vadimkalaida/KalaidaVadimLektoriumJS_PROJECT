@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const FormConstructor = styled.form`
-  width: 700px;
-  height: 350px;
+  width: 1000px;
+  min-height: 350px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -90,25 +90,33 @@ export const DropDownMenu = styled.div`
   position: relative;
   display: inline-block;
   cursor: pointer;
-  border: 1px solid #297CC1;
+  border: none;
   margin-right: 10px;
-  & span {
-    font-size: 24px;
-    min-height: 35px;
+  margin-top: 20px;
+  background: #0f0c29;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  & p {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #8C30DF;
   }
   & div {
     min-width: 120px;
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     z-index: 1;
     & p {
       min-height: 35px;
-      color: #0E57AA;
+      text-transform: lowercase;
+      color: #4C11DD;
       font-weight: 800;
       font-size: 18px;
-      border-bottom: 1px solid #0E57AA;
+      border-bottom: 1px solid #4C11DD;
       margin-bottom: 0;
       margin-top: 0;
       display: flex;
@@ -116,7 +124,7 @@ export const DropDownMenu = styled.div`
       justify-content: center;
       transition: .3s;
       &:hover {
-        background: rgba(14,87,170, .1);
+        background: rgba(76,17,221, .1);
       }
     }
   }
@@ -128,9 +136,9 @@ export const DropDownMenu = styled.div`
 export const FormConstructorAddInput = styled.button`
   width: 150px;
   height: 50px;
-  background: #0f0c29;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #8E2DE2;
+  background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
+  background: linear-gradient(to right, #4A00E0, #8E2DE2);
   outline: none;
   border: 1px solid #100E29;
   color: #fff;
@@ -141,16 +149,15 @@ export const FormConstructorAddInput = styled.button`
   transition: .2s;
   margin-bottom: 25px;
   &:hover {
-    border: 2px solid #110E2A;
-    background: #8E2DE2;
-    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
-    background: linear-gradient(to right, #4A00E0, #8E2DE2);
-  }
-  &:active {
-    background: #0E57AA;
     background: #0f0c29;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border: 2px solid #110E2A;
+  }
+  &:active {
+    background: #8E2DE2;
+    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
+    background: linear-gradient(to right, #4A00E0, #8E2DE2);
   }
 `;
 
