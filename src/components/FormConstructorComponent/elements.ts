@@ -12,6 +12,7 @@ export const FormConstructor = styled.form`
   background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   position: relative;
+  margin-bottom: 50px;
 `;
 
 export const FormConstructorTitle = styled.p`

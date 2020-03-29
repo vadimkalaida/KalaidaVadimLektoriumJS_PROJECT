@@ -81,13 +81,7 @@ const FormConstructorComponent : React.FC = () => {
     if(inputType === 'Type:' || inputName.length < 1 || inputColor.length > 7 || inputBorderColor.length > 7) {
       alert('Please, choose type of input, write name of input or inputColor.length > 7 or inputBG.length > 7!');
     } else {
-      // if(localStorage.getItem('forms_array')) {
-      //   let unsortedFormsArray : any = localStorage.getItem('forms_array');
-      //   let formsArray = JSON.parse(unsortedFormsArray);
-      // } else {
-      //   let formsArray = [];
-      // }
-      let inputObject : any = {its: 'input', type: inputType, name: inputName, placeholder: '', inputColor: '#ffffff', inputBG: 'transparent', inputBorderColor: '#297CC1', required: 0};
+      let inputObject : any = {its: 'input', type: inputType, name: inputName, placeholder: '', inputColor: '#100E2A', inputBG: '#6B20DE', inputBorderColor: '#100E2A', required: 0};
 
       if(inputPlaceholder.length > 0) {
         inputObject.placeholder = inputPlaceholder;
@@ -152,12 +146,12 @@ const FormConstructorComponent : React.FC = () => {
           </DropDownMenu>
           <FormConstructorInput type={'text'} id={'inputName'} name={'inputName'} onChange={handleInputNameChange} value={ inputName } placeholder={'*name'} />
           <FormConstructorInput type={'text'} id={'inputPlaceholder'} name={'inputPlaceholder'} onChange={handleInputPlaceholderChange} value={ inputPlaceholder } placeholder={'placeholder'} />
-          <FormConstructorInput type={'text'} id={'inputColor'} name={'inputColor'} onChange={handleInputColorChange} value={ inputColor } placeholder={'color(#0E57AA)'} />
-          <FormConstructorInput style={{width: 225, marginRight: 10}} type={'text'} id={'inputBG'} name={'inputBG'} onChange={handleInputBGChange} value={ inputBG } placeholder={'BG color(#0E57AA)'} />
-          <FormConstructorInput style={{width: 225, marginLeft: 10}} type={'text'} id={'inputBorderColor'} name={'inputBorderColor'} onChange={handleInputBorderColorChange} value={ inputBorderColor } placeholder={'Border color(#0E57AA)'} />
+          <FormConstructorInput type={'text'} id={'inputColor'} name={'inputColor'} onChange={handleInputColorChange} value={ inputColor } placeholder={'color(#100E2A)'} />
+          <FormConstructorInput style={{width: 225, marginRight: 10}} type={'text'} id={'inputBG'} name={'inputBG'} onChange={handleInputBGChange} value={ inputBG } placeholder={'BG color(#6B20DE)'} />
+          <FormConstructorInput style={{width: 225, marginLeft: 10}} type={'text'} id={'inputBorderColor'} name={'inputBorderColor'} onChange={handleInputBorderColorChange} value={ inputBorderColor } placeholder={'Border color(#100E2A)'} />
           <FormConstructorInput style={{marginLeft: 20}} type={'checkbox'} id={'inputRequired'} onClick={handleInputRequiredClick} name={'inputRequired'} />
         </FormConstructorInputBlock>
-        <FormConstructorAddInput onClick={addTitle}>Add Input</FormConstructorAddInput>
+        <FormConstructorAddInput onClick={addInput}>Add Input</FormConstructorAddInput>
 
 
       </FormConstructor>
