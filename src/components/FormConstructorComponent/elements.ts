@@ -8,9 +8,9 @@ export const FormConstructor = styled.form`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: #0f0c29;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #0f0c29;
+  background: -webkit-linear-gradient(to right, #24243e, #0f0c29);
+  background: linear-gradient(to right, #24243e, #0f0c29);
   position: relative;
   margin-bottom: 50px;
 `;
@@ -137,11 +137,9 @@ export const DropDownMenu = styled.div`
 export const FormConstructorAddInput = styled.button`
   width: 150px;
   height: 50px;
-  background: #8E2DE2;
-  background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
-  background: linear-gradient(to right, #4A00E0, #8E2DE2);
+  background: #8A2FDF;
   outline: none;
-  border: 1px solid #100E29;
+  border: 2px solid #100E29;
   color: #fff;
   text-transform: uppercase;
   font-size: 22px;
@@ -150,15 +148,10 @@ export const FormConstructorAddInput = styled.button`
   transition: .2s;
   margin-bottom: 25px;
   &:hover {
-    background: #0f0c29;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #24243e, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #24243e, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    border: 2px solid #110E2A;
+    background: #4C10DD;
   }
   &:active {
-    background: #8E2DE2;
-    background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
-    background: linear-gradient(to right, #4A00E0, #8E2DE2);
+    background: #8A2FDF;
   }
 `;
 
@@ -172,7 +165,7 @@ export const FormConstructorLine = styled.hr`
 export const MakeFormButton = styled.button`
   width: 250px;
   min-height: 80px;
-  background: #0E57AA;
+  background: #100D29;
   outline: none;
   border: none;
   color: #fff;
@@ -183,9 +176,9 @@ export const MakeFormButton = styled.button`
   transition: .2s;
   margin-bottom: 15px;
   &:hover {
-    background: #014A9D;
+    background: #201D39;
   }
   &:active {
-    background: #0E57AA;
+    background: #100D29;
   }
 `;

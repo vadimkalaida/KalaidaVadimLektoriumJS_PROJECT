@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
-import { FormConstructor, FormConstructorTitle, FormConstructorInputBlock, FormConstructorInput, FormConstructorTip, FormConstructorAddInput, DropDownMenu } from './elements'
+import { FormConstructor, FormConstructorTitle, FormConstructorInputBlock, FormConstructorInput,
+  FormConstructorTip, FormConstructorAddInput, DropDownMenu, MakeFormButton } from './elements'
+import FormComponent from '../FormComponent/FormComponent'
 
 const FormConstructorComponent : React.FC = () => {
   const [ inputType, setInputType ] : React.ComponentState = useState('Type:');
@@ -118,43 +120,152 @@ const FormConstructorComponent : React.FC = () => {
     }
   };
 
+  const handleSubmitButtonTextChange = (e : any) => {
+    setFormSubmitButtonText(e.target.value);
+  };
+
+  const handleSubmitButtonColorChange = (e : any) => {
+    setFormSubmitButtonColor(e.target.value);
+  };
+
+  const handleSubmitButtonBGChange = (e : any) => {
+    setFormSubmitButtonBG(e.target.value);
+  };
+
+  const handleSubmitButtonBorderColorChange = (e : any) => {
+    setFormSubmitButtonBorderColor(e.target.value);
+  };
+
+  const handleSubmitButtonWidthChange = (e : any) => {
+    setFormSubmitButtonWidth(e.target.value);
+  };
+
+  const handleSubmitButtonHeightChange = (e : any) => {
+    setFormSubmitButtonHeight(e.target.value);
+  };
+
+  const addSubmitButton = (e : any) => {
+    e.preventDefault();
+
+    if( formSubmitButtonColor.length > 7 || formSubmitButtonBorderColor.length > 7 || formSubmitButtonWidth.length > 7 || formSubmitButtonHeight.length > 7) {
+      alert('Please, submitButtonColor.length > 7, submitButtonBorderColor.length > 7, submitButtonWidth.length > 7 or submitButtonHeight.length > 7');
+    } else {
+      let submitButtonObject : any = {its: 'submitButton' ,text: formSubmitButtonText, color: '#ffffff', bg: '#8933DC', BorderColor: 'none', width: '150px', height: '50px'};
+
+      if(formSubmitButtonColor.length > 1) {
+        submitButtonObject.color = formSubmitButtonColor;
+      }
+
+      if(formSubmitButtonBG.length > 1) {
+        submitButtonObject.bg = formSubmitButtonBG;
+      }
+
+      if(formSubmitButtonBorderColor.length > 1) {
+        submitButtonObject.BorderColor = formSubmitButtonBorderColor;
+      }
+
+      if(formSubmitButtonWidth.length > 0) {
+        submitButtonObject.width = formSubmitButtonWidth + 'px';
+      }
+
+      if(formSubmitButtonHeight.length > 0) {
+        submitButtonObject.height = formSubmitButtonHeight + 'px';
+      }
+
+      let submitButtonIndex : number = -1;
+
+      for(let i : number = 0; i < formComponentsArray.length; i++) {
+        if(formComponentsArray[i].its === 'submitButton') {
+          submitButtonIndex = i;
+        }
+      }
+
+      if(submitButtonIndex === -1) {
+        formComponentsArray.push(submitButtonObject);
+      } else {
+        formComponentsArray[submitButtonIndex] = submitButtonObject;
+      }
+
+      console.log(formComponentsArray);
+
+      setFormSubmitButtonText('');
+      setFormSubmitButtonColor('');
+      setFormSubmitButtonBG('');
+      setFormSubmitButtonBorderColor('');
+      setFormSubmitButtonWidth('');
+      setFormSubmitButtonHeight('');
+
+      alert('Submit Button was added!');
+    }
+
+
+  };
+
+  const makeForm = (e : any) => {
+    e.preventDefault();
+    if(formComponentsArray.length < 2) {
+      alert('Form is not finished. Form should has title and al least one input or submit button!');
+    } else {
+      setShowLinkNumber(1);
+    }
+
+  };
+
+  const showFormConstructor = () => {
+    return(
+      <>
+        <FormConstructor>
+          <FormConstructorTip>Checkbox(checked) - required</FormConstructorTip>
+
+          <FormConstructorTitle>Title</FormConstructorTitle>
+          <FormConstructorInputBlock>
+            <FormConstructorInput type={'text'} id={'formTitle'} name={'formTitle'} value={formTitle} onChange={handleFormTitleChange} placeholder={'Title'} />
+          </FormConstructorInputBlock>
+          <FormConstructorAddInput onClick={addTitle}>Add Title</FormConstructorAddInput>
+
+          <FormConstructorTitle>Input</FormConstructorTitle>
+          <FormConstructorInputBlock>
+            <DropDownMenu>
+              <p>{ inputType }</p>
+              <div>
+                <p onClick={() => {setInputType('email')}}>email</p>
+                <p onClick={() => {setInputType('text')}}>text</p>
+                <p onClick={() => {setInputType('password')}}>password</p>
+                <p onClick={() => {setInputType('number')}}>number</p>
+                <p onClick={() => {setInputType('checkbox')}}>checkbox</p>
+                <p onClick={() => {setInputType('submit')}}>submit</p>
+                <p onClick={() => {setInputType('button')}}>button</p>
+              </div>
+            </DropDownMenu>
+            <FormConstructorInput type={'text'} name={'inputName'} onChange={handleInputNameChange} value={ inputName } placeholder={'*name'} />
+            <FormConstructorInput type={'text'} name={'inputPlaceholder'} onChange={handleInputPlaceholderChange} value={ inputPlaceholder } placeholder={'placeholder'} />
+            <FormConstructorInput type={'text'} name={'inputColor'} onChange={handleInputColorChange} value={ inputColor } placeholder={'color(#100E2A)'} />
+            <FormConstructorInput style={{width: 275, marginRight: 10}} type={'text'} name={'inputBG'} onChange={handleInputBGChange} value={ inputBG } placeholder={'BG color(#6B20DE)'} />
+            <FormConstructorInput style={{width: 275, marginLeft: 10}} type={'text'} name={'inputBorderColor'} onChange={handleInputBorderColorChange} value={ inputBorderColor } placeholder={'Border color(#100E2A)'} />
+            <FormConstructorInput style={{cursor: 'pointer'}} type={'checkbox'} onClick={handleInputRequiredClick} name={'inputRequired'} />
+          </FormConstructorInputBlock>
+          <FormConstructorAddInput onClick={addInput}>Add Input</FormConstructorAddInput>
+
+          <FormConstructorTitle>Submit Button</FormConstructorTitle>
+          <FormConstructorInputBlock>
+            <FormConstructorInput type={'text'} name={'submitValue'} onChange={handleSubmitButtonTextChange} value={ formSubmitButtonText } placeholder={'*value'} />
+            <FormConstructorInput type={'text'} name={'submitColor'} onChange={handleSubmitButtonColorChange} value={ formSubmitButtonColor } placeholder={'color(#100E2A)'} />
+            <FormConstructorInput style={{width: 275, marginRight: 10}} type={'text'} name={'submitBG'} onChange={handleSubmitButtonBGChange} value={ formSubmitButtonBG } placeholder={'BG color(#8933DC)'} />
+            <FormConstructorInput style={{width: 275, marginLeft: 10}} type={'text'} name={'submitBorderColor'} onChange={handleSubmitButtonBorderColorChange} value={ formSubmitButtonBorderColor } placeholder={'Border color(#100E2A)'} />
+            <FormConstructorInput style={{width: 275, marginRight: 10}} type={'text'} name={'submitWidth'} onChange={handleSubmitButtonWidthChange} value={ formSubmitButtonWidth } placeholder={'Width(100)'} />
+            <FormConstructorInput style={{width: 275, marginLeft: 10}} type={'text'} name={'submitHeight'} onChange={handleSubmitButtonHeightChange} value={ formSubmitButtonHeight } placeholder={'Height(50)'} />
+          </FormConstructorInputBlock>
+          <FormConstructorAddInput onClick={addSubmitButton} style={{width: 200, height: 65}}>Add Submit Button</FormConstructorAddInput>
+        </FormConstructor>
+        <MakeFormButton onClick={makeForm}>Make Form</MakeFormButton>
+      </>
+    );
+  };
+
   return(
     <>
       <HeaderComponent pageNameProps={'form_constructor'} />
-      <FormConstructor>
-        <FormConstructorTip>Checkbox(checked) - required</FormConstructorTip>
-
-        <FormConstructorTitle>Title</FormConstructorTitle>
-        <FormConstructorInputBlock>
-          <FormConstructorInput type={'text'} id={'formTitle'} name={'formTitle'} value={formTitle} onChange={handleFormTitleChange} placeholder={'Title'} />
-        </FormConstructorInputBlock>
-        <FormConstructorAddInput onClick={addTitle}>Add Title</FormConstructorAddInput>
-
-        <FormConstructorTitle>Input</FormConstructorTitle>
-        <FormConstructorInputBlock>
-          <DropDownMenu>
-            <p>{ inputType }</p>
-            <div>
-              <p onClick={() => {setInputType('email')}}>email</p>
-              <p onClick={() => {setInputType('text')}}>text</p>
-              <p onClick={() => {setInputType('password')}}>password</p>
-              <p onClick={() => {setInputType('number')}}>number</p>
-              <p onClick={() => {setInputType('checkbox')}}>checkbox</p>
-              <p onClick={() => {setInputType('submit')}}>submit</p>
-              <p onClick={() => {setInputType('button')}}>button</p>
-            </div>
-          </DropDownMenu>
-          <FormConstructorInput type={'text'} id={'inputName'} name={'inputName'} onChange={handleInputNameChange} value={ inputName } placeholder={'*name'} />
-          <FormConstructorInput type={'text'} id={'inputPlaceholder'} name={'inputPlaceholder'} onChange={handleInputPlaceholderChange} value={ inputPlaceholder } placeholder={'placeholder'} />
-          <FormConstructorInput type={'text'} id={'inputColor'} name={'inputColor'} onChange={handleInputColorChange} value={ inputColor } placeholder={'color(#100E2A)'} />
-          <FormConstructorInput style={{width: 225, marginRight: 10}} type={'text'} id={'inputBG'} name={'inputBG'} onChange={handleInputBGChange} value={ inputBG } placeholder={'BG color(#6B20DE)'} />
-          <FormConstructorInput style={{width: 225, marginLeft: 10}} type={'text'} id={'inputBorderColor'} name={'inputBorderColor'} onChange={handleInputBorderColorChange} value={ inputBorderColor } placeholder={'Border color(#100E2A)'} />
-          <FormConstructorInput style={{marginLeft: 20}} type={'checkbox'} id={'inputRequired'} onClick={handleInputRequiredClick} name={'inputRequired'} />
-        </FormConstructorInputBlock>
-        <FormConstructorAddInput onClick={addInput}>Add Input</FormConstructorAddInput>
-
-
-      </FormConstructor>
+      { showLinkNumber === 0 ? showFormConstructor() : <FormComponent formArray={formComponentsArray} /> }
     </>
   );
 };
