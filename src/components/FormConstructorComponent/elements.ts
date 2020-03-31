@@ -155,13 +155,6 @@ export const FormConstructorAddInput = styled.button`
   }
 `;
 
-export const FormConstructorLine = styled.hr`
-  width: 85%;
-  height: 2px;
-  border: none;
-  background: #014A9D;
-`;
-
 export const MakeFormButton = styled.button`
   width: 250px;
   min-height: 80px;

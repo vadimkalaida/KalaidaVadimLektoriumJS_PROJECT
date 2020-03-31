@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import { AddProjectForm, AddProjectTitle, AddProjectInput, AddProjectButton, AddProjectBlocker } from "./elements";
 import { FormError } from "../../elements";
+import { sendRequestGetProjects, sendRequestAddProject } from "../../services/projectsRequests";
 
 const AddProjectComponent : React.FC = () => {
   const [ addProjectTitle, setAddProjectTitle ] : React.ComponentState = useState('');
@@ -13,32 +14,6 @@ const AddProjectComponent : React.FC = () => {
   const [ addProjectBlocker, setAddProjectBlocker ] : React.ComponentState = useState(1);
   let checkDate : RegExp = /^\d{4}\-\d{2}\-\d{2}$/;
   let loginUserId : any = localStorage.getItem('lektorium_login_user_id');
-
-  const sendRequestAddProject = async (url : string, myTitle : string, myCompany : string, myCost : string, myDeadline : string, userId : any) : Promise<any> => {
-    return await fetch(url, {
-      method : 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        title : myTitle,
-        company : myCompany,
-        cost : myCost,
-        deadline : myDeadline,
-        assigned : userId
-      }),
-    })
-      .then(response => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json().then(error => {
-          const err : any = new Error('Something went wrong');
-          err.data = error;
-          throw err;
-        })
-      });
-  }
 
   const handleProjectTitleChange = (e : any) => {
     setAddProjectTitle(e.target.value);
@@ -94,12 +69,35 @@ const AddProjectComponent : React.FC = () => {
     sendRequestAddProject('https://geekhub-frontend-js-9.herokuapp.com/api/projects/', addProjectTitle, userCompany, '$' + addProjectCost, addProjectDeadline, loginUserId )
       .then(data => {
         console.log(data);
-        alert('Please, reload webpage to see new projects:)');
+        alert('Project was added');
       })
       .catch(err => {
         console.log(err);
         alert('Sorry but something went wrong:(')
       });
+
+    sendRequestGetProjects('https://geekhub-frontend-js-9.herokuapp.com/api/projects')
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('projects_array', JSON.stringify(data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    let projectsArray : any = [];
+
+    let localStorageProjects : any = localStorage.getItem('projects_array');
+    let parsedLocalStorageProjects : any = JSON.parse(localStorageProjects);
+
+    for(let i : number = 0; i < parsedLocalStorageProjects.length; i++) {
+      if(parsedLocalStorageProjects[i].assigned !== null) {
+        projectsArray.push(parsedLocalStorageProjects[i])
+      }
+    }
+
+    localStorage.setItem('sorted_projects_array', JSON.stringify(projectsArray));
+
 
     setAddProjectTitle('');
     setAddProjectCost('');

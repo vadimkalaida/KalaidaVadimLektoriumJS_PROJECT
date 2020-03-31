@@ -33,10 +33,9 @@ export const FormInput = styled.input`
   font-weight: 800;
   font-size: 18px;
   outline: none;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 30px;
   &::placeholder {
-    color: #6F22DE;
+    color: rgba(16,14,42, .5);
   }
 `;
 
@@ -46,7 +45,6 @@ export const FormButton = styled.input`
   font-size: 22px;
   font-weight: 800;
   cursor: pointer;
-  margin-top: 20px;
   margin-bottom: 25px;
 `;
 

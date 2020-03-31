@@ -9,50 +9,12 @@ import {
   ProjectsTitle
 } from "./elements";
 import formatDate from "../../services/formatDate";
+import { sendRequestGetProjects, sendRequestDelProject } from "../../services/projectsRequests";
 
 
 const ProjectsComponent : React.FC = () => {
-  const sendRequestGetProjects = async (url : string, body = null) : Promise<any> => {
-    return await fetch(url, {
-      method: 'GET',
-      headers: {
-        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'
-      }
-    })
-      .then(response => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json()
-          .then(error => {
-            const err : any = new Error('Something went wrong');
-            err.data = error;
-            throw err;
-          })
-      })
-  };
 
-  const sendRequestDelProject = async (url : string, body = null) => {
-    return await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type' : 'application/json'
-      }
-    })
-      .then(response => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json()
-          .then(error => {
-            const err : any = new Error('Something went wrong');
-            err.data = error;
-            throw err;
-          })
-      })
-  };
-
-  const showProjects = () => {
+  const getProjects = () => {
     sendRequestGetProjects('https://geekhub-frontend-js-9.herokuapp.com/api/projects')
       .then(data => {
         console.log(data);
@@ -73,6 +35,13 @@ const ProjectsComponent : React.FC = () => {
     }
 
     localStorage.setItem('sorted_projects_array', JSON.stringify(projectsArray));
+  };
+
+  const showProjects = () => {
+    getProjects();
+
+    let unparsedProjects : any = localStorage.getItem('sorted_projects_array');
+    let projectsArray = JSON.parse(unparsedProjects);
 
     return(
       <>
@@ -92,7 +61,9 @@ const ProjectsComponent : React.FC = () => {
                 })
                 .catch(err => {
                   console.log(err);
-                })}
+                });
+              getProjects();
+            }
             }>Delete Project</DeleteProjectParagraph> : null }
           </Project> ) }
         </ProjectsBlock>

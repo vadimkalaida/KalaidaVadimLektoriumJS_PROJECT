@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormTitle, FormInput, FormButton, FormLink } from "./element";
-import { Link } from "react-router-dom";
 
 
 const FormComponent : React.FC<{formArray : Array<any>}> = ({formArray}) => {
