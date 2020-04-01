@@ -42,7 +42,7 @@ const FormComponent : React.FC<{formArray : Array<any>}> = ({formArray}) => {
   return(
     <>
       <Form>
-        <FormTitle>{ title }</FormTitle>
+        { title !== '' ? <FormTitle>{ title }</FormTitle> : null }
         { showInputNumber === 1 ? inputsArray.map( ( item : any, index : number ) => {
           if(item.required === 1) {
             return (

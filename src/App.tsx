@@ -12,6 +12,7 @@ import FormConstructorComponent from "./components/FormConstructorComponent/Form
 import UsersComponent from "./components/UsersComponent/UsersComponent";
 import ProjectsComponent from "./components/ProjectsComponent/ProjectsComponent";
 import UserInfoComponent from "./components/UserInfoComponent/UserInfoComponent";
+import FlexComponent from "./components/FlexComponent/FlexComponent";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route exact path='/users' component={ UsersComponent }/>
             <Route exact path='/projects' component={ ProjectsComponent }/>
             <Route exact path='/user_info' component={ UserInfoComponent }/>
+            <Route exact path='/flex' component={ FlexComponent }/>
           </Switch>
         </Router>
       </div>

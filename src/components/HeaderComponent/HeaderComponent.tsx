@@ -30,6 +30,9 @@ const HeaderComponent : React.FC<{ buttonTextColorProps? : string, pageNameProps
       <button style={pageNameProps === 'user_info' ? styleBackgroundObject : defaultStyleObject}>
         <Link style={{ color: buttonTextColorProps }} to={'/user_info'}>User Info</Link>
       </button>
+      <button style={pageNameProps === 'flex' ? styleBackgroundObject : defaultStyleObject}>
+        <Link style={{ color: buttonTextColorProps }} to={'/flex'}>Flex</Link>
+      </button>
     </Header>
   );
 };
