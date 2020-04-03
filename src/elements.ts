@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const AppBlock = styled.div`
+  width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;

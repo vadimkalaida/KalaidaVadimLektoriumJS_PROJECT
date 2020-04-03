@@ -14,11 +14,16 @@ const LoginComponent : React.FC = () => {
   const testLetters : RegExp = /[a-zA-Z]/;
   const testNumber : RegExp = /[0-9]/;
 
-  const sendRequest = async (url : string, method : any, headers : any, body : any) : Promise<any> => {
+  const sendRequest = async (url : string, method : any, loginEmail : string, loginPassword : string) : Promise<any> => {
     return await fetch(url, {
       method: method,
-      headers: headers,
-      body : JSON.stringify(body)
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify({
+        email: loginEmail,
+        password: loginPassword,
+      })
     })
       .then((response) => {
         if(response.ok) {
@@ -33,10 +38,12 @@ const LoginComponent : React.FC = () => {
       })
   };
 
-  const sendRequestGet = async (url : string, headers : any) : Promise<any> => {
+  const sendRequestGet = async (url : string) : Promise<any> => {
     return await fetch(url, {
       method: 'GET',
-      headers: headers
+      headers: {
+        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'
+      }
     })
       .then((response) => {
         if(response.ok) {
@@ -83,8 +90,6 @@ const LoginComponent : React.FC = () => {
   const Login = (e : any) => {
     e.preventDefault();
 
-    alert('If button "Sign in" doesn\'t work, please wait or click again...');
-
     let header = {'Content-Type': 'application/json'},
     body = {
         email: loginEmail,
@@ -92,40 +97,40 @@ const LoginComponent : React.FC = () => {
     },
       getHeader = {'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'};
 
-    sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/login', 'POST', header, body)
+    sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/login', 'POST', loginEmail, loginPassword)
       .then(data => {
         console.log(data);
-        sessionStorage.setItem('userLoggedIN', '1');
-        setShowNumber(1);
-        setLoginEmail('');
-        setLoginPassword('');
+        sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all')
+          .then(data => {
+            let dbUsers : Array<any> = data,
+              checkEmailNumber : number = -1;
+
+            localStorage.setItem('users', JSON.stringify(dbUsers));
+
+            for(let i = 0; i < dbUsers.length; i++) {
+              if (loginEmail === dbUsers[i].email) {
+                checkEmailNumber = i;
+                i = dbUsers.length - 1;
+              }
+            }
+            if(checkEmailNumber !== -1) {
+              setShowNumber(1);
+              localStorage.setItem('lektorium_login_user_id', '');
+              localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id);
+              alert('If button "Sign in" doesn\'t work, please wait or click again...');
+            } else {
+              sessionStorage.setItem('userLoggedIN', '0');
+              alert('Account was not found or password is incorrect!');
+            }
+            setLoginEmail('');
+            setLoginPassword('');
+          })
       })
       .catch(err => {
         console.log(err);
         sessionStorage.setItem('userLoggedIN', '0');
         alert('Account was not found or password is incorrect!');
       });
-    if(sessionStorage.getItem('userLoggedIN') === '1') {
-      sendRequestGet('https://geekhub-frontend-js-9.herokuapp.com/api/users/all', getHeader)
-        .then(data => {
-          let dbUsers : Array<any> = data,
-            checkEmailNumber : number = 0;
-
-          localStorage.setItem('users', JSON.stringify(dbUsers));
-
-          for(let i = 0; i < dbUsers.length; i++) {
-            if (loginEmail === dbUsers[i].email) {
-              checkEmailNumber = i;
-              i = dbUsers.length - 1;
-            }
-          }
-          if(sessionStorage.getItem('userLoggedIN') === '1') {
-            setShowNumber(1);
-            localStorage.setItem('lektorium_login_user_id', '');
-            localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id)
-          }
-        })
-    }
   };
 
   return(

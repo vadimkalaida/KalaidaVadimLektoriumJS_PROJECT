@@ -17,23 +17,23 @@ import FlexComponent from "./components/FlexComponent/FlexComponent";
 function App() {
   return (
     <AppBlock>
-      <div className="App">
-        <Router>
-          <Switch>
-            <Route exact path='/' component={ LoginComponent }/>
-            <Route exact path='/register' component={ RegisterComponent }/>
-            <Route exact path='/resetPass' component={ ResetPasswordComponent }/>
-            <Route exact path='/home' component={ HomeComponent }/>
-            <Route exact path='/addProject' component={ AddProjectComponent }/>
-            <Route exact path='/todo' component={ ToDoComponent }/>
-            <Route exact path='/form_constructor' component={ FormConstructorComponent }/>
-            <Route exact path='/users' component={ UsersComponent }/>
-            <Route exact path='/projects' component={ ProjectsComponent }/>
-            <Route exact path='/user_info' component={ UserInfoComponent }/>
-            <Route exact path='/flex' component={ FlexComponent }/>
-          </Switch>
-        </Router>
-      </div>
+
+      <Router>
+        <Switch>
+          <Route exact path='/' component={ LoginComponent }/>
+          <Route exact path='/register' component={ RegisterComponent }/>
+          <Route exact path='/resetPass' component={ ResetPasswordComponent }/>
+          <Route exact path='/home' component={ HomeComponent }/>
+          <Route exact path='/addProject' component={ AddProjectComponent }/>
+          <Route exact path='/todo' component={ ToDoComponent }/>
+          <Route exact path='/form_constructor' component={ FormConstructorComponent }/>
+          <Route exact path='/users' component={ UsersComponent }/>
+          <Route exact path='/projects' component={ ProjectsComponent }/>
+          <Route exact path='/user_info' component={ UserInfoComponent }/>
+          <Route exact path='/flex' component={ FlexComponent }/>
+        </Switch>
+      </Router>
+
     </AppBlock>
   );
 }
