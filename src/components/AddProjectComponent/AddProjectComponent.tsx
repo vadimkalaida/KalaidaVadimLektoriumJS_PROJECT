@@ -3,6 +3,7 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import { AddProjectForm, AddProjectTitle, AddProjectInput, AddProjectButton, AddProjectBlocker } from "./elements";
 import { FormError } from "../../elements";
 import { sendRequestGetProjects, sendRequestAddProject } from "../../services/projectsRequests";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const AddProjectComponent : React.FC = () => {
   const [ addProjectTitle, setAddProjectTitle ] : React.ComponentState = useState('');
@@ -104,20 +105,28 @@ const AddProjectComponent : React.FC = () => {
     setAddProjectDeadline('');
   };
 
+  const ProjectForm = () => {
+    return(
+      <>
+        <HeaderComponent buttonTextColorProps={'#FD7867'} pageNameProps={'add_project'} buttonBackgroundProps={'#2F0842'} />
+        <AddProjectForm>
+          <AddProjectTitle>Add Project</AddProjectTitle>
+          <AddProjectInput type={'text'} name={'ProjectTitle'} value={addProjectTitle} onChange={handleProjectTitleChange} placeholder={'Title(Wordpress Theme)...'} />
+          <FormError>{ addProjectTitleError }</FormError>
+          <AddProjectInput type={'text'} name={'ProjectCost'} value={addProjectCost} onChange={handleProjectCostChange} placeholder={'Cost(570250 - DONT USE $)...'} />
+          <FormError>{ addProjectCostError }</FormError>
+          <AddProjectInput type={'text'} name={'ProjectDeadline'} value={addProjectDeadline} onChange={handleProjectDeadlineChange} placeholder={'Deadline(2021-01-28)...'} />
+          <FormError>{ addProjectDeadlineError }</FormError>
+          { addProjectBlocker === 1 ? <AddProjectBlocker></AddProjectBlocker> : null }
+          <AddProjectButton onClick={addProject}>Add Project</AddProjectButton>
+        </AddProjectForm>
+      </>
+    );
+  };
+
   return(
     <>
-      <HeaderComponent buttonTextColorProps={'#FD7867'} pageNameProps={'add_project'} buttonBackgroundProps={'#2F0842'} />
-      <AddProjectForm>
-        <AddProjectTitle>Add Project</AddProjectTitle>
-        <AddProjectInput type={'text'} name={'ProjectTitle'} value={addProjectTitle} onChange={handleProjectTitleChange} placeholder={'Title(Wordpress Theme)...'} />
-        <FormError>{ addProjectTitleError }</FormError>
-        <AddProjectInput type={'text'} name={'ProjectCost'} value={addProjectCost} onChange={handleProjectCostChange} placeholder={'Cost(570250 - DONT USE $)...'} />
-        <FormError>{ addProjectCostError }</FormError>
-        <AddProjectInput type={'text'} name={'ProjectDeadline'} value={addProjectDeadline} onChange={handleProjectDeadlineChange} placeholder={'Deadline(2021-01-28)...'} />
-        <FormError>{ addProjectDeadlineError }</FormError>
-        { addProjectBlocker === 1 ? <AddProjectBlocker></AddProjectBlocker> : null }
-        <AddProjectButton onClick={addProject}>Add Project</AddProjectButton>
-      </AddProjectForm>
+      { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : ProjectForm() }
     </>
   );
 };

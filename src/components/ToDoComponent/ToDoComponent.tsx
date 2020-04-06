@@ -7,6 +7,7 @@ import {
   AddToDoInput,
   AddToDoTitle, ToDoItem, ToDoItemsBlock
 } from "./elements";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const ToDoComponent : React.FC = () => {
   let unparsedTodoArray : any = localStorage.getItem('lektorium_todo_list');
@@ -56,6 +57,7 @@ const ToDoComponent : React.FC = () => {
 
     return(
       <>
+        <HeaderComponent buttonTextColorProps={'#6EE1E2'} pageNameProps={'todo'} buttonBackgroundProps={'#005D5E'} />
         <AddToDoBlock>
           <AddToDoTitle>Add ToDo Item</AddToDoTitle>
           <AddToDoInput type={'text'} name={'todo_item'} onChange={handleToDoItemContentChange} value={todoContent} placeholder={'Text...'} />
@@ -96,8 +98,7 @@ const ToDoComponent : React.FC = () => {
 
   return(
     <>
-      <HeaderComponent buttonTextColorProps={'#6EE1E2'} pageNameProps={'todo'} buttonBackgroundProps={'#005D5E'} />
-      { toDoList() }
+      { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : toDoList() }
     </>
   );
 };

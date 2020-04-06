@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MainBlock, Title, Form, FormInput, FormError, FormButton, RegisterBlocker, FormLink } from "../../elements";
 import validator from "validator";
 import { Link } from "react-router-dom";
+import { sendRequestRegister } from "../../services/registerRequests";
 
 const RegisterComponent = () => {
   const [ registerName, setRegisterName ] : React.ComponentState = useState('');
@@ -26,35 +27,6 @@ const RegisterComponent = () => {
   const testLetters : RegExp = /[a-zA-Z]/;
   const testNumber : RegExp = /[0-9]/;
   const testName : RegExp = /^[A-Za-z][A-Za-z0-9]*$/;
-
-  const sendRequest = async (url : string, myJob : string, myPhone : string, myAddress : string, myCompany : string, myName : string, myEmail : string, myPass : string) : Promise<any> => {
-    return await fetch(url, {
-      method : 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        position: myJob,
-        description: 'Master/Lomaster.',
-        phone: myPhone,
-        address: myAddress,
-        organization: myCompany,
-        name: myName,
-        email: myEmail,
-        password: myPass
-      }),
-    })
-      .then(response => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json().then(error => {
-          const err : any = new Error('Something went wrong');
-          err.data = error;
-          throw err;
-        })
-      });
-  }
 
   const handleNameRegisterChange = (e : any) => {
     setRegisterName(e.target.value);
@@ -107,7 +79,7 @@ const RegisterComponent = () => {
       registerPhone += Math.floor((Math.random() * 9));
     }
 
-    sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/', registerJob, registerPhone, registerAddress, registerCompany, registerName, registerEmail, registerPassword)
+    sendRequestRegister('https://geekhub-frontend-js-9.herokuapp.com/api/users/', registerJob, registerPhone, registerAddress, registerCompany, registerName, registerEmail, registerPassword)
       .then((data) => {
         alert('You\'ve successfully registered!');
         console.log(data);

@@ -3,6 +3,7 @@ import { MainBlock, Title, Form, FormInput, FormError, FormButton, LoginBlocker,
 import { GoToHomeLink } from "./elements";
 import validator from "validator";
 import { Link } from "react-router-dom";
+import { sendRequest, sendRequestGet } from "../../services/loginRequests";
 
 const LoginComponent : React.FC = () => {
   const [ loginEmail, setLoginEmail ] : React.ComponentState = useState('');
@@ -14,49 +15,6 @@ const LoginComponent : React.FC = () => {
   const testLetters : RegExp = /[a-zA-Z]/;
   const testNumber : RegExp = /[0-9]/;
 
-  const sendRequest = async (url : string, method : any, loginEmail : string, loginPassword : string) : Promise<any> => {
-    return await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        email: loginEmail,
-        password: loginPassword,
-      })
-    })
-      .then((response) => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json()
-          .then(error => {
-            const err : any = new Error('Something went wrong');
-            err.data = error;
-            return err;
-          })
-      })
-  };
-
-  const sendRequestGet = async (url : string) : Promise<any> => {
-    return await fetch(url, {
-      method: 'GET',
-      headers: {
-        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'
-      }
-    })
-      .then((response) => {
-        if(response.ok) {
-          return response.json();
-        }
-        return response.json()
-          .then(error => {
-            const err : any = new Error('Something went wrong');
-            err.data = error;
-            return err;
-          })
-      })
-  };
 
   const handleLoginEmailChange = (e : any) => {
     setLoginEmail(e.target.value);
@@ -89,13 +47,7 @@ const LoginComponent : React.FC = () => {
 
   const Login = (e : any) => {
     e.preventDefault();
-
-    let header = {'Content-Type': 'application/json'},
-    body = {
-        email: loginEmail,
-        password: loginPassword,
-    },
-      getHeader = {'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE5YzIyM2E0MTk5YzAwMjI3NTI2OGEiLCJpYXQiOjE1Nzk2ODc4OTl9.M5q83O_nP6B8SbfNKOs3CaQTu4JaQcbr_MgDLSgqnTU'};
+    alert('If button "Sign in" doesn\'t work, please wait or click again...');
 
     sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/login', 'POST', loginEmail, loginPassword)
       .then(data => {
@@ -114,10 +66,11 @@ const LoginComponent : React.FC = () => {
               }
             }
             if(checkEmailNumber !== -1) {
+              alert('You\'ve successfully loggined!');
               setShowNumber(1);
               localStorage.setItem('lektorium_login_user_id', '');
               localStorage.setItem('lektorium_login_user_id', dbUsers[checkEmailNumber]._id);
-              alert('If button "Sign in" doesn\'t work, please wait or click again...');
+              sessionStorage.setItem('userLoggedIN', '1');
             } else {
               sessionStorage.setItem('userLoggedIN', '0');
               alert('Account was not found or password is incorrect!');

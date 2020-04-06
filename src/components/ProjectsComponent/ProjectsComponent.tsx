@@ -10,7 +10,7 @@ import {
 } from "./elements";
 import formatDate from "../../services/formatDate";
 import { sendRequestGetProjects, sendRequestDelProject } from "../../services/projectsRequests";
-
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const ProjectsComponent : React.FC = () => {
 
@@ -45,6 +45,7 @@ const ProjectsComponent : React.FC = () => {
 
     return(
       <>
+        <HeaderComponent buttonTextColorProps={'#F5005C'} pageNameProps={'projects'} buttonBackgroundProps={'#750000'} />
         <ProjectsBlock>
           <ProjectsTitle>Projects</ProjectsTitle>
           { projectsArray.map( (item : any, index : number) => <Project key={index}>
@@ -73,8 +74,7 @@ const ProjectsComponent : React.FC = () => {
 
   return(
     <MainHomeBlock>
-      <HeaderComponent buttonTextColorProps={'#F5005C'} pageNameProps={'projects'} buttonBackgroundProps={'#750000'} />
-      { showProjects() }
+      { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : showProjects() }
     </MainHomeBlock>
   );
 };

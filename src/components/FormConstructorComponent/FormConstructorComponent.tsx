@@ -3,6 +3,7 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import { FormConstructor, FormConstructorTitle, FormConstructorInputBlock, FormConstructorInput,
   FormConstructorTip, FormConstructorAddInput, DropDownMenu, MakeFormButton } from './elements'
 import FormComponent from '../FormComponent/FormComponent'
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const FormConstructorComponent : React.FC = () => {
   const [ inputType, setInputType ] : React.ComponentState = useState('Type:');
@@ -262,10 +263,18 @@ const FormConstructorComponent : React.FC = () => {
     );
   };
 
+  const showFormContent = () => {
+    return(
+      <>
+        <HeaderComponent pageNameProps={'form_constructor'} />
+        { showLinkNumber === 0 ? showFormConstructor() : <FormComponent formArray={formComponentsArray} /> }
+      </>
+    )
+  };
+
   return(
     <>
-      <HeaderComponent pageNameProps={'form_constructor'} />
-      { showLinkNumber === 0 ? showFormConstructor() : <FormComponent formArray={formComponentsArray} /> }
+      { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : showFormContent() }
     </>
   );
 };

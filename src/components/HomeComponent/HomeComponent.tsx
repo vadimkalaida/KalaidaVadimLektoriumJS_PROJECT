@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { ErrorBlock } from "../../elements";
 import { MainHomeBlock, HomeParagraph } from "./elements";
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid } from 'recharts';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const HomeComponent = () => {
-  let userLoggedIN : any = sessionStorage.getItem('userLoggedIN');
+
   const barData = [
     {
       name: '2015',
@@ -61,17 +60,9 @@ const HomeComponent = () => {
     )
   };
 
-  const loginAccount = () => {
-    return(
-      <ErrorBlock>
-        <Link to={'/'}>Please login to your account.</Link>
-      </ErrorBlock>
-    );
-  };
-
   return(
     <>
-      { userLoggedIN === 0 ? loginAccount() : mainHomeBlock() }
+      { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : mainHomeBlock() }
     </>
   );
 };

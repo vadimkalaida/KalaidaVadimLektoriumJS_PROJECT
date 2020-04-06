@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import {
   FindUserButton,
@@ -8,6 +8,7 @@ import {
   FoundUserParagraph, FoundUsersBlock,
   UserInfoBlock, UserNotFound
 } from "./elements";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 const UsersComponent : React.FC = () => {
   const [ findUserName, setFindUserName ] : React.ComponentState = useState('');
@@ -92,6 +93,7 @@ const UsersComponent : React.FC = () => {
   const usersInformation = () => {
     return(
       <>
+        <HeaderComponent buttonTextColorProps={'#F01FFF'} pageNameProps={'users'} buttonBackgroundProps={'#3D1F6F'} />
         <FindUserForm>
           <FindUserTitle>Find User</FindUserTitle>
           <FindUserInput type={'text'} name={'findUser'} onChange={handleFindUserNameChange} value={findUserName} placeholder={'Name of user...'} />
@@ -109,8 +111,7 @@ const UsersComponent : React.FC = () => {
 
   return(
     <>
-      <HeaderComponent buttonTextColorProps={'#F01FFF'} pageNameProps={'users'} buttonBackgroundProps={'#3D1F6F'} />
-      { usersInformation() }
+     { !sessionStorage.getItem('userLoggedIN') || sessionStorage.getItem('userLoggedIN') === '0' ? <ErrorComponent /> : usersInformation() }
     </>
   );
 };
