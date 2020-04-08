@@ -18,6 +18,9 @@ const HeaderComponent : React.FC<{ buttonTextColorProps? : string, pageNameProps
       <button style={pageNameProps === 'form_constructor' ? styleBackgroundObject : defaultStyleObject}>
         <Link style={{ color: buttonTextColorProps }} to={'/form_constructor'}>Form Constructor</Link>
       </button>
+      <button style={pageNameProps === 'messages' ? styleBackgroundObject : defaultStyleObject}>
+        <Link style={{ color: buttonTextColorProps }} to={'/messages'}>Messages</Link>
+      </button>
       <button style={pageNameProps === 'users' ? styleBackgroundObject : defaultStyleObject}>
         <Link style={{ color: buttonTextColorProps }} to={'/users'}>Users</Link>
       </button>

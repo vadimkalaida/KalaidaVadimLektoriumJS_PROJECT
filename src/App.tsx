@@ -13,6 +13,7 @@ import UsersComponent from "./components/UsersComponent/UsersComponent";
 import ProjectsComponent from "./components/ProjectsComponent/ProjectsComponent";
 import UserInfoComponent from "./components/UserInfoComponent/UserInfoComponent";
 import FlexComponent from "./components/FlexComponent/FlexComponent";
+import MessagesComponent from "./components/MessagesComponent/MessagesComponent";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route exact path='/addProject' component={ AddProjectComponent }/>
           <Route exact path='/todo' component={ ToDoComponent }/>
           <Route exact path='/form_constructor' component={ FormConstructorComponent }/>
+          <Route exact path='/messages' component={ MessagesComponent } />
           <Route exact path='/users' component={ UsersComponent }/>
           <Route exact path='/projects' component={ ProjectsComponent }/>
           <Route exact path='/user_info' component={ UserInfoComponent }/>

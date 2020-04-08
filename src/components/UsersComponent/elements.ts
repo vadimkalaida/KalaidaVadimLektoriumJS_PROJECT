@@ -95,6 +95,7 @@ export const FoundUserParagraph = styled.p`
 `;
 
 export const UserNotFound = styled.p`
+  max-width: 55%;
   color: #002B87;
   font-size: 32px;
   font-weight: 800;

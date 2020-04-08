@@ -102,7 +102,7 @@ const UsersComponent : React.FC = () => {
         <FoundUsersBlock>
           <FindUserTitle>Users</FindUserTitle>
           { showUsersNumber === 1 ? showUsers() : null }
-          { showUsersNumber === 2 ? <UserNotFound>User not found</UserNotFound> : null }
+          { showUsersNumber === 2 ? <UserNotFound>It's your account or user not found</UserNotFound> : null }
         </FoundUsersBlock>
         { showUsersInfoNumber === 1 ? showUserInfo() : null }
       </>
