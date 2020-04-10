@@ -27,6 +27,9 @@ const MessagesComponent : React.FC = () => {
     setShowInfoNumber('1');
     setShowMessagesNumber(showMessagesNumber + 'a');
 
+    let startedPhrases : Array<string> = ['Hi!', 'Hi, bro!', 'What\'s up, man!', 'Hey, dude!', 'Hello, how are you?', 'How r u?', 'What happened?'];
+    localStorage.setItem('firstMessageOfFriend', startedPhrases[Math.floor(Math.random() * startedPhrases.length)]);
+
   };
 
   const showInfoOfUser = () => {
@@ -47,7 +50,7 @@ const MessagesComponent : React.FC = () => {
   const messagesContent = () => {
     return(
       <>
-        <HeaderComponent pageNameProps={'messages'} />
+        <HeaderComponent pageNameProps={'messages'} buttonTextColorProps={'#52FCFF'} buttonBackgroundProps={'#0068DA'} />
         <ConversationBlock>
           { showInfoNumber === '1' ? showInfoOfUser() : null }
           { showInfoNumber === '0' ? <NewConversation onClick={randomConversation}>New Conversation</NewConversation> : null }

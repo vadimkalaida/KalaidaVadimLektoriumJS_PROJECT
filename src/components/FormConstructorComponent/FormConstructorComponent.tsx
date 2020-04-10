@@ -266,7 +266,7 @@ const FormConstructorComponent : React.FC = () => {
   const showFormContent = () => {
     return(
       <>
-        <HeaderComponent pageNameProps={'form_constructor'} />
+        <HeaderComponent buttonBackgroundProps={'#1A1833'} buttonTextColorProps={'#FECC79'} pageNameProps={'form_constructor'} />
         { showLinkNumber === 0 ? showFormConstructor() : <FormComponent formArray={formComponentsArray} /> }
       </>
     )

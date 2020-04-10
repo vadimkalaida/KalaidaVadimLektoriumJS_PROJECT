@@ -18,7 +18,7 @@ const FlexComponent = () => {
   const showFlex = () => {
     return(
       <>
-        <HeaderComponent pageNameProps={'flex'} buttonBackgroundProps={'#1ED05D'} />
+        <HeaderComponent pageNameProps={'flex'} buttonBackgroundProps={'#1ED05D'} buttonTextColorProps={'#E6B45A'} />
         { showGiphNumber === 1 ? <FlexImg src="https://i.giphy.com/media/13FzDAoxlBesgM/giphy.webp" alt="Kek dancer"/> : null }
         { showGiphNumber === 2 ? <FlexImg src="https://i.giphy.com/media/Jb56O0QSZRopG/giphy.webp" alt="Kek dancer"/> : null }
         { showGiphNumber === 3 ? <FlexImg src="https://media3.giphy.com/media/3zSaOGAwLHhxC/giphy.gif?cid=ecf05e47f64cc31222f0ca3df1b875665f8ace4335fcc56f&rid=giphy.gif" alt="Kek dancer"/> : null }
