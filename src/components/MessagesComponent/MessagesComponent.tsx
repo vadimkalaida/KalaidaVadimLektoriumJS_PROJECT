@@ -17,6 +17,12 @@ const MessagesComponent : React.FC = () => {
     let foundUser = [];
     let userId = localStorage.getItem('lektorium_login_user_id');
 
+    for(let i : number = 0; i < users.length; i++) {
+      if(users[i]._id === userId) {
+        localStorage.setItem('user', JSON.stringify([users[i]]));
+      }
+    }
+
     foundUser.push(users[Math.floor(Math.random() * users.length)]);
 
     if(foundUser[0]._id === userId) {

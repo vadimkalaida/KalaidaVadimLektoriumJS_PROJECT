@@ -72,7 +72,7 @@ export const Messages = styled.div`
 `;
 
 export const MessagesLeft = styled.div`
-  max-width: 350px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -85,7 +85,7 @@ export const LeftMessage = styled.div`
   display: flex;
   margin-left: 25px;
   margin-top: 25px;
-  margin-bottom: 75px;
+  margin-bottom: 100px;
 `;
 
 export const FriendAvatar = styled.div`
@@ -105,11 +105,39 @@ export const FriendContent = styled.div`
 `;
 
 export const MessagesRight = styled.div`
-  width: 50%;
+  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-align: right;
+`;
+
+export const RightMessage = styled.div`
+  max-width: 350px;
+  min-height: 50px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  text-align: right;
+  margin-right: 25px;
+  margin-top: 25px;
+  margin-bottom: 100px;
+`;
+
+export const UserAvatar = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #1CC6FD;
+  margin-left: 10px;
+`;
+
+export const UserContent = styled.div`
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 10px;
 `;
 
 export const MessageName = styled.p`
@@ -128,8 +156,10 @@ export const MessageDate = styled.p`
 `;
 
 export const MessageText = styled.div`
-  background: rgba(38,178,250, .9);
+  max-width: 280px;
+  
   border-radius: 15px;
+  text-align: left;
   & p {
     max-width: 250px;
     color: #333536;
