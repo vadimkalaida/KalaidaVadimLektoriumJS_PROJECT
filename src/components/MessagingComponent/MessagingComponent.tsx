@@ -48,16 +48,35 @@ const MessagingComponent : React.FC<{ conversationUser : Array<object> }> = ( co
               </FriendContent>
             </LeftMessage>
 
-            { friendMessagesArray.map( ( item : any, index : number ) => <LeftMessage key={ index }>
-              <FriendAvatar></FriendAvatar>
-              <FriendContent>
-                <MessageName>{ friend.conversationUser[0].name }</MessageName>
-                <MessageDate>{ new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) }</MessageDate>
-                <MessageText style={{background: 'rgba(28,198,253, .9)'}}>
-                  <p>{ item }</p>
-                </MessageText>
-              </FriendContent>
-            </LeftMessage> ) }
+            { friendMessagesArray.map( ( item : any, index : number ) => {
+              if(item.length > 0) {
+                return(
+                  <LeftMessage key={ index }>
+                    <FriendAvatar></FriendAvatar>
+                    <FriendContent>
+                      <MessageName>{ friend.conversationUser[0].name }</MessageName>
+                      <MessageDate>{ new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) }</MessageDate>
+                      <MessageText style={{background: 'rgba(28,198,253, .9)'}}>
+                        <p>{ item }</p>
+                      </MessageText>
+                    </FriendContent>
+                  </LeftMessage>
+                );
+              } else {
+                return(
+                  <LeftMessage style={{opacity: 0}} key={ index }>
+                    <FriendAvatar></FriendAvatar>
+                    <FriendContent>
+                      <MessageName>{ friend.conversationUser[0].name }</MessageName>
+                      <MessageDate>{ new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) }</MessageDate>
+                      <MessageText style={{background: 'rgba(28,198,253, .9)'}}>
+                        <p>{ item }</p>
+                      </MessageText>
+                    </FriendContent>
+                  </LeftMessage>
+                );
+              }
+            } ) }
 
           </MessagesLeft>
 
