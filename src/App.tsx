@@ -14,6 +14,7 @@ import ProjectsComponent from "./components/ProjectsComponent/ProjectsComponent"
 import UserInfoComponent from "./components/UserInfoComponent/UserInfoComponent";
 import FlexComponent from "./components/FlexComponent/FlexComponent";
 import MessagesComponent from "./components/MessagesComponent/MessagesComponent";
+import GameComponent from "./components/GameComponent/GameComponent";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route exact path='/messages' component={ MessagesComponent } />
           <Route exact path='/users' component={ UsersComponent }/>
           <Route exact path='/projects' component={ ProjectsComponent }/>
+          <Route exact path='/game' component={ GameComponent }/>
           <Route exact path='/user_info' component={ UserInfoComponent }/>
           <Route exact path='/flex' component={ FlexComponent }/>
         </Switch>

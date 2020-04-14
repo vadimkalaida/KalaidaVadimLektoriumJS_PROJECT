@@ -30,6 +30,9 @@ const HeaderComponent : React.FC<{ buttonTextColorProps? : string, pageNameProps
       <button style={pageNameProps === 'add_project' ? styleBackgroundObject : defaultStyleObject}>
         <Link style={{ color: buttonTextColorProps }} to={'/addProject'}>Add Project</Link>
       </button>
+      <button style={pageNameProps === 'game' ? styleBackgroundObject : defaultStyleObject}>
+        <Link style={{ color: buttonTextColorProps }} to={'/game'}>Game</Link>
+      </button>
       <button style={pageNameProps === 'user_info' ? styleBackgroundObject : defaultStyleObject}>
         <Link style={{ color: buttonTextColorProps }} to={'/user_info'}>User Info</Link>
       </button>
