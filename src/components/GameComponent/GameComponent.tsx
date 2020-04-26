@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import galahad from './images/GallahadHeader.png';
@@ -15,7 +15,6 @@ const GameComponent : React.FC = () => {
   const [ bottomGalahadPressed, setBottomGalahadPressed ] : React.ComponentState = useState(false);
   const [ leftGalahadPressed, setLeftGalahadPressed ] : React.ComponentState = useState(false);
   const [ rightGalahadPressed, setRightGalahadPressed ] : React.ComponentState = useState(false);
-
 
   const moveGalahad = (e : any) => {
     if(e.keyCode === 38) {
@@ -48,13 +47,19 @@ const GameComponent : React.FC = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", moveGalahad, false);
-    document.addEventListener("keyup", notMoveGalahad, false);
     if(topGalahadPressed === true) {
-      setTopPosGalahad(topPosGalahad - 1);
+      if(topPosGalahad !== 0) {
+        setTopPosGalahad(topPosGalahad - 1);
+      } else {
+        setTopPosGalahad(topPosGalahad)
+      }
     }
     if(bottomGalahadPressed === true) {
-      setTopPosGalahad(topPosGalahad + 1);
+      if(topPosGalahad !== 635) {
+        setTopPosGalahad(topPosGalahad + 1);
+      } else {
+        setTopPosGalahad(topPosGalahad)
+      }
     }
     if(leftGalahadPressed === true) {
       setLeftPosGalahad(leftPosGalahad - 1);
@@ -62,6 +67,9 @@ const GameComponent : React.FC = () => {
     if(rightGalahadPressed === true) {
       setLeftPosGalahad(leftPosGalahad + 1);
     }
+
+    document.addEventListener("keydown", moveGalahad, false);
+    document.addEventListener("keyup", notMoveGalahad, false);
   }, [topPosGalahad, leftPosGalahad, topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed]);
 
   const ShowGame = () => {
@@ -69,7 +77,7 @@ const GameComponent : React.FC = () => {
     return(
       <>
         <GameArena>
-          <GameCharacter style={{left: leftPosGalahad, top: topPosGalahad}} src={galahad} alt="Galahad" />
+          <GameCharacter id={'galahadMoveId'} style={{left: leftPosGalahad, top: topPosGalahad}} src={galahad} alt="Galahad" />
           <GameCharacter style={{left: leftPosWerewolf, top: topPosWerewolf}} src={werewolf} alt="Galahad" />
         </GameArena>
       </>
@@ -99,6 +107,8 @@ const GameComponent : React.FC = () => {
               if(topPosWerewolf === topPosGalahad) {
                 setTopPosWerewolf(Math.ceil(Math.random() * 600));
               }
+
+
               setShowContentNumber('2');
             }}>Start</StartGame>
           </GameMainBlock> }
