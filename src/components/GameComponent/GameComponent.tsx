@@ -11,27 +11,58 @@ const GameComponent : React.FC = () => {
   const [ topPosGalahad, setTopPosGalahad ] : React.ComponentState = useState(0);
   const [ leftPosWerewolf, setLeftPosWerewolf ] : React.ComponentState = useState(0);
   const [ topPosWerewolf, setTopPosWerewolf ] : React.ComponentState = useState(0);
-  const [ changePosLeftWerewolfNumber, setChangePosLeftWerewolfNumber ] : React.ComponentState = useState(0);
-  const [ changePosTopWerewolfNumber, setChangePosTopWerewolfNumber ] : React.ComponentState = useState(0);
+  const [ topGalahadPressed, setTopGalahadPressed ] : React.ComponentState = useState(false);
+  const [ bottomGalahadPressed, setBottomGalahadPressed ] : React.ComponentState = useState(false);
+  const [ leftGalahadPressed, setLeftGalahadPressed ] : React.ComponentState = useState(false);
+  const [ rightGalahadPressed, setRightGalahadPressed ] : React.ComponentState = useState(false);
+
 
   const moveGalahad = (e : any) => {
     if(e.keyCode === 38) {
-      setTopPosGalahad(topPosGalahad - 20);
+      setTopGalahadPressed(true);
     }
     if(e.keyCode === 40) {
-      setTopPosGalahad(topPosGalahad + 20);
+      setBottomGalahadPressed(true);
     }
     if(e.keyCode === 37) {
-      setLeftPosGalahad(leftPosGalahad - 20);
+      setLeftGalahadPressed(true);
     }
     if (e.keyCode === 39) {
-      setLeftPosGalahad(leftPosGalahad + 20);
+      setRightGalahadPressed(true);
+    }
+  };
+
+  const notMoveGalahad = (e : any) => {
+    if(e.keyCode === 38) {
+      setTopGalahadPressed(false);
+    }
+    if(e.keyCode === 40) {
+      setBottomGalahadPressed(false);
+    }
+    if(e.keyCode === 37) {
+      setLeftGalahadPressed(false);
+    }
+    if (e.keyCode === 39) {
+      setRightGalahadPressed(false);
     }
   };
 
   useEffect(() => {
     document.addEventListener("keydown", moveGalahad, false);
-  });
+    document.addEventListener("keyup", notMoveGalahad, false);
+    if(topGalahadPressed === true) {
+      setTopPosGalahad(topPosGalahad - 1);
+    }
+    if(bottomGalahadPressed === true) {
+      setTopPosGalahad(topPosGalahad + 1);
+    }
+    if(leftGalahadPressed === true) {
+      setLeftPosGalahad(leftPosGalahad - 1);
+    }
+    if(rightGalahadPressed === true) {
+      setLeftPosGalahad(leftPosGalahad + 1);
+    }
+  }, [topPosGalahad, leftPosGalahad, topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed]);
 
   const ShowGame = () => {
 

@@ -41,7 +41,7 @@ const RegisterComponent = () => {
   };
 
   useEffect(() => {
-    if(!testName.test(registerName) || registerName.length < 8 || registerName.length > 36) {
+    if(!testName.test(registerName) || registerName.length < 6 || registerName.length > 36) {
       setRegisterNameError('Oops, looks like name is incorrect.');
     } else {
       setRegisterNameError('');
@@ -59,7 +59,7 @@ const RegisterComponent = () => {
       setRegisterPasswordError('');
     }
 
-    if(!testName.test(registerName) || registerName.length < 8 || registerName.length > 36 || !validator.isEmail(registerEmail) || registerPassword.length < 8 || !testLetters.test(registerPassword) || !testNumber.test(registerPassword) || registerPassword.length > 24) {
+    if(!testName.test(registerName) || registerName.length < 6 || registerName.length > 36 || !validator.isEmail(registerEmail) || registerPassword.length < 8 || !testLetters.test(registerPassword) || !testNumber.test(registerPassword) || registerPassword.length > 24) {
       setRegisterBlocker(1);
     } else {
       setRegisterBlocker(0);
@@ -69,6 +69,7 @@ const RegisterComponent = () => {
 
   const signUp = ( e : any ) => {
     e.preventDefault();
+    alert('If button doesn\'t work, please click again or wait for some time...');
 
     let registerPhone : string = '+48 ',
       registerJob : string = userPosts[Math.floor(Math.random() * userPosts.length)],

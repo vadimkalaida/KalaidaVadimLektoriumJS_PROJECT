@@ -33,27 +33,24 @@ const UsersComponent : React.FC = () => {
 
       for(let i : number = 0; i < users.length; i++) {
         findUserNumber = 0;
-        if(users[i]._id !== loggedInUserId) {
-          for(let j : number = 0; j < findUserName.length; j++) {
-            if(findUserName[j] === users[i].name[j]) {
-              findUserNumber = 1;
-            } else {
-              findUserNumber = 0;
-              j = findUserName.length - 1;
-            }
-          }
-          if(findUserNumber === 1) {
-            foundUsers.push(users[i]);
+        for(let j : number = 0; j < findUserName.length; j++) {
+          if(findUserName[j] === users[i].name[j]) {
+            findUserNumber = 1;
+          } else {
+            findUserNumber = 0;
+            j = findUserName.length - 1;
           }
         }
+        if(findUserNumber === 1) {
+          foundUsers.push(users[i]);
+        }
+
       }
 
       console.log(foundUsers);
       if(foundUsers.length !== 0) {
         setShowUsersNumber(1);
         setFoundUser(foundUsers);
-      } else {
-        setShowUsersNumber(2);
       }
 
     } else {

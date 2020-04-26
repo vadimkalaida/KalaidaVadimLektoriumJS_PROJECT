@@ -4,6 +4,7 @@ import { GoToHomeLink } from "./elements";
 import validator from "validator";
 import { Link } from "react-router-dom";
 import { sendRequest, sendRequestGet } from "../../services/loginRequests";
+import { getProjects } from "../../services/getProjects";
 
 const LoginComponent : React.FC = () => {
   const [ loginEmail, setLoginEmail ] : React.ComponentState = useState('');
@@ -48,6 +49,7 @@ const LoginComponent : React.FC = () => {
   const Login = (e : any) => {
     e.preventDefault();
     alert('If button "Sign in" doesn\'t work, please wait or click again...');
+    getProjects();
 
     sendRequest('https://geekhub-frontend-js-9.herokuapp.com/api/users/login', 'POST', loginEmail, loginPassword)
       .then(data => {

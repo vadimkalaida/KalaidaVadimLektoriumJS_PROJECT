@@ -55,6 +55,7 @@ const ResetPasswordComponent = () => {
 
   const reset = (e : any) => {
     e.preventDefault();
+    alert('If button doesn\'t work, please click again or wait for some time...');
 
     sendRequestReset('https://geekhub-frontend-js-9.herokuapp.com/api/users/reset_password', resetPassword, resetConfirmPassword, resetEmail)
       .then(data => {
