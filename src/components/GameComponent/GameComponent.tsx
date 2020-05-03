@@ -3,7 +3,7 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import galahad from './images/GallahadHeader.png';
 import werewolf from './images/PolukrovkaHead.png';
-import { GameMainBlock, GameInfo, StartGame, GameArena, GameCharacter } from './elements'
+import { GameMainBlock, GameInfo, StartGame, GameArena, GameCharacter, GameTimerParagraph  } from './elements'
 
 const GameComponent : React.FC = () => {
   let unsortedPosY : any = sessionStorage.getItem('posY');
@@ -24,6 +24,8 @@ const GameComponent : React.FC = () => {
   const [ bottomWereWolfPressed, setBottomWereWolfPressed ] : React.ComponentState = useState(false);
   const [ leftWereWolfPressed, setLeftWereWolfPressed ] : React.ComponentState = useState(false);
   const [ rightWereWolfPressed, setRightWereWolfPressed ] : React.ComponentState = useState(false);
+  const [ gameTime, setGameTime ] : React.ComponentState = useState(0);
+
 
   const moveGalahad = (e : any) => {
     if(e.keyCode === 38) {
@@ -84,11 +86,27 @@ const GameComponent : React.FC = () => {
     }
   };
 
+
+  // game timer useEffect
+  useEffect(() => {
+    if(showContentNumber === '2' && gameTime < 30) {
+      setTimeout(() => {
+        setGameTime(gameTime + 1);
+      }, 1000);
+    }
+  }, [ gameTime, showContentNumber ]);
+
+
+  // control useEffect
   useEffect(() => {
     let unsortedPosY : any = sessionStorage.getItem('posY');
     let topPos = JSON.parse(unsortedPosY);
     let unsortedPosX : any = sessionStorage.getItem('posX');
     let leftPos = JSON.parse(unsortedPosX);
+    let unsortedWereWolfPosY : any = sessionStorage.getItem('werewolf_posY');
+    let wereWolfTopPos = JSON.parse(unsortedWereWolfPosY);
+    let unsortedWereWolfPosX : any = sessionStorage.getItem('werewolf_posX');
+    let wereWolfLeftPos = JSON.parse(unsortedWereWolfPosX);
 
     if(topGalahadPressed === true) {
       if(topPos > 9) {
@@ -118,10 +136,6 @@ const GameComponent : React.FC = () => {
     document.addEventListener("keydown", moveGalahad, false);
     document.addEventListener("keyup", notMoveGalahad, false);
 
-    let unsortedWereWolfPosY : any = sessionStorage.getItem('werewolf_posY');
-    let wereWolfTopPos = JSON.parse(unsortedWereWolfPosY);
-    let unsortedWereWolfPosX : any = sessionStorage.getItem('werewolf_posX');
-    let wereWolfLeftPos = JSON.parse(unsortedWereWolfPosX);
 
     if(topWereWolfPressed === true) {
       if(wereWolfTopPos > 10) {
@@ -150,12 +164,29 @@ const GameComponent : React.FC = () => {
 
     document.addEventListener("keydown", moveWereWolf, false);
     document.addEventListener("keyup", notMoveWereWolf, false);
-  }, [topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed, topWereWolfPressed, bottomWereWolfPressed, leftWereWolfPressed, rightWereWolfPressed]);
+
+  }, [ topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed, topWereWolfPressed, bottomWereWolfPressed, leftWereWolfPressed, rightWereWolfPressed]);
+
+
+  //death useEffect
+  useEffect(() => {
+    if(topGalahadPressed === true || bottomGalahadPressed === true || leftGalahadPressed === true || rightGalahadPressed === true ||
+      topWereWolfPressed === true || bottomWereWolfPressed === true || leftWereWolfPressed === true || rightGalahadPressed === true) {
+      if(wereWolfTopPos >= (topPos - 55) && wereWolfTopPos <= (topPos + 55)) {
+        if(wereWolfLeftPos >= (leftPos - 38) && wereWolfLeftPos <= (leftPos + 38)) {
+          alert('Galahad is dead');
+          document.location.reload();
+        }
+      }
+    }
+  });
+
 
   const ShowGame = () => {
 
     return(
       <>
+        <GameTimerParagraph>{ gameTime <= 30 ? `Timer: ${gameTime} seconds` : <span>Time to kill Werewolf</span> }</GameTimerParagraph>
         <GameArena>
           <GameCharacter style={{left: leftPos, top: topPos}} src={galahad} alt="Galahad" />
           <GameCharacter style={{left: wereWolfLeftPos, top: wereWolfTopPos}} src={werewolf} alt="Werewolf" />
