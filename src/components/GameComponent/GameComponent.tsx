@@ -24,7 +24,6 @@ const GameComponent : React.FC = () => {
   const [ bottomWereWolfPressed, setBottomWereWolfPressed ] : React.ComponentState = useState(false);
   const [ leftWereWolfPressed, setLeftWereWolfPressed ] : React.ComponentState = useState(false);
   const [ rightWereWolfPressed, setRightWereWolfPressed ] : React.ComponentState = useState(false);
-  const [ justNumber, setJustNumber ] : React.ComponentState = useState(1);
 
   const moveGalahad = (e : any) => {
     if(e.keyCode === 38) {
@@ -181,7 +180,6 @@ const GameComponent : React.FC = () => {
               let wereWolfPosY : number = Math.ceil(Math.random() * 600);
               let wereWolfPosX : number = Math.ceil(Math.random() * 900);
 
-
               if(wereWolfPosX === posX) {
                 wereWolfPosX = Math.ceil(Math.random() * 900);
               }
@@ -194,6 +192,8 @@ const GameComponent : React.FC = () => {
               sessionStorage.setItem('posX', JSON.stringify(posX));
               sessionStorage.setItem('werewolf_posY', JSON.stringify(wereWolfPosY));
               sessionStorage.setItem('werewolf_posX', JSON.stringify(wereWolfPosX));
+
+              alert('W/A/S/D - Werewolf; Arrows - Galahad!');
 
               setShowContentNumber('2');
             }}>Start</StartGame>
