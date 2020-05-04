@@ -31,6 +31,8 @@ const GameComponent : React.FC = () => {
   const [ leftWereWolfPressed, setLeftWereWolfPressed ] : React.ComponentState = useState(false);
   const [ rightWereWolfPressed, setRightWereWolfPressed ] : React.ComponentState = useState(false);
   const [ gameTime, setGameTime ] : React.ComponentState = useState(0);
+  const [ gameTimeWithGun, setGameTimeWithGun ] : React.ComponentState = useState(0);
+  const [ showTimeMessageNumber, setShowTimeMessageNumber ] : React.ComponentState = useState(0);
   const [ showGunNumber, setShowGunNumber ] : React.ComponentState = useState(0);
   const [ restartNumber, setRestartNumber ] : React.ComponentState = useState(0);
   const [ galahadZIndex, setGalahadZIndex ] : React.ComponentState = useState(0);
@@ -98,11 +100,19 @@ const GameComponent : React.FC = () => {
 
   // game timer useEffect
   useEffect(() => {
-    if(showContentNumber === '2' && gameTime <= 30) {
+    if(showContentNumber === '2' && gameTime <= 12) {
       setTimeout(() => {
         setGameTime(gameTime + 1);
       }, 1000);
     }
+
+    if(gameTime >= 12) {
+      setShowTimeMessageNumber(1);
+    } else {
+      setShowTimeMessageNumber(0);
+    }
+
+
   }, [ gameTime, showContentNumber ]);
 
 
@@ -147,26 +157,26 @@ const GameComponent : React.FC = () => {
 
 
     if(topWereWolfPressed === true) {
-      if(wereWolfTopPos > 10) {
-        wereWolfTopPos -= 11;
+      if(wereWolfTopPos > 9) {
+        wereWolfTopPos -= 10;
         sessionStorage.setItem('werewolf_posY', wereWolfTopPos);
       }
     }
     if(bottomWereWolfPressed === true) {
-      if(wereWolfTopPos < 623) {
-        wereWolfTopPos += 11;
+      if(wereWolfTopPos < 624) {
+        wereWolfTopPos += 10;
         sessionStorage.setItem('werewolf_posY', wereWolfTopPos);
       }
     }
     if(leftWereWolfPressed === true) {
-      if(wereWolfLeftPos > 10) {
-        wereWolfLeftPos -= 11;
+      if(wereWolfLeftPos > 9) {
+        wereWolfLeftPos -= 10;
         sessionStorage.setItem('werewolf_posX', wereWolfLeftPos);
       }
     }
     if(rightWereWolfPressed === true) {
-      if(wereWolfLeftPos < 933) {
-        wereWolfLeftPos += 11;
+      if(wereWolfLeftPos < 934) {
+        wereWolfLeftPos += 10;
         sessionStorage.setItem('werewolf_posX', wereWolfLeftPos);
       }
     }
@@ -196,10 +206,10 @@ const GameComponent : React.FC = () => {
 
   //weapon useEffect
   useEffect(() => {
-    if(gameTime >= 30 && getWeaponNumber === 0) {
+    if(gameTime >= 12 && getWeaponNumber === 0) {
       setShowGunNumber(1);
-      if(topPos >= (topPosGun - 20) && topPos <= (topPosGun + 20)) {
-        if(leftPos >= (leftPosGun - 30) && leftPos <= (leftPosGun + 30)) {
+      if(topPos >= (topPosGun - 50) && topPos <= (topPosGun + 30)) {
+        if(leftPos >= (leftPosGun - 30) && leftPos <= (leftPosGun + 45)) {
           setGetWeaponNumber(1);
           setShowGunNumber(0);
         }
@@ -210,6 +220,7 @@ const GameComponent : React.FC = () => {
 
     if(getWeaponNumber === 1) {
       setGalahadImage(galahadWithGun);
+      setShowTimeMessageNumber(2);
       setGalahadZIndex(9999999);
     } else {
       setGalahadImage(galahad);
@@ -222,7 +233,11 @@ const GameComponent : React.FC = () => {
 
     return(
       <>
-        <GameTimerParagraph>{ gameTime <= 30 ? `Timer: ${gameTime} seconds` : <span>Time to kill Werewolf</span> }</GameTimerParagraph>
+        <GameTimerParagraph>
+          { showTimeMessageNumber === 0 ? `Timer: ${gameTime} seconds` : null }
+          { showTimeMessageNumber === 1 ? <span>Time to kill Werewolf</span> : null }
+          { showTimeMessageNumber === 2 ? `Timer with gun: ${gameTimeWithGun} seconds` : null }
+        </GameTimerParagraph>
         <GameArena>
           <GameCharacter style={{left: leftPos, top: topPos, zIndex: galahadZIndex}} src={galahadImage} alt="Galahad" />
           <GameCharacter style={{left: wereWolfLeftPos, top: wereWolfTopPos}} src={werewolf} alt="Werewolf" />
