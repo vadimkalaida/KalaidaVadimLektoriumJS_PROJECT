@@ -72,6 +72,12 @@ export const GameCharacter = styled.img`
   position: absolute;
 `;
 
+export const GameGunImage = styled.img`
+  width: 70px;
+  height: 45px;
+  position: absolute;
+`;
+
 export const GameTimerParagraph = styled.p`
   background: #F00000;
   background: -webkit-linear-gradient(to right, #DC281E, #F00000);
