@@ -219,10 +219,21 @@ const GameComponent : React.FC = () => {
     }
 
     if(getWeaponNumber === 1) {
+      if(gameTimeWithGun <= 5) {
+        setTimeout(() => {
+          setGameTimeWithGun(gameTimeWithGun + 1);
+        }, 1000);
+      }
       setGalahadImage(galahadWithGun);
       setShowTimeMessageNumber(2);
       setGalahadZIndex(9999999);
+      if(gameTimeWithGun >= 5) {
+        setGameTime(0);
+        setShowTimeMessageNumber(0);
+        setGetWeaponNumber(0);
+      }
     } else {
+      setGameTimeWithGun(0);
       setGalahadImage(galahad);
       setGalahadZIndex(0);
     }
