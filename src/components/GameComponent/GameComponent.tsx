@@ -3,9 +3,12 @@ import HeaderComponent from "../HeaderComponent/HeaderComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import galahad from './images/GallahadHeader.png';
 import galahadWithGun from './images/GalahadWithGun.png';
+import galahadWithSword from './images/GalahadWithSword.png'
 import werewolf from './images/PolukrovkaHead.png';
+import deadWerewolf from './images/dead_werewolf_edited.jpg';
 import gun from './images/gun.png';
-import { GameMainBlock, GameInfo, StartGame, GameArena, GameCharacter, GameTimerParagraph, GameGunImage } from './elements'
+import sword from './images/Sword.png'
+import { GameMainBlock, GameInfo, StartGame, GameArena, GameCharacter, GameTimerParagraph, GameSwordImage, GameGunImage, GameBulletImage } from './elements'
 
 const GameComponent : React.FC = () => {
   let unsortedPosY : any = sessionStorage.getItem('posY');
@@ -19,6 +22,7 @@ const GameComponent : React.FC = () => {
 
   const [ showContentNumber, setShowContentNumber ] : React.ComponentState = useState('1');
   const [ galahadImage, setGalahadImage ] : React.ComponentState = useState(galahad);
+  const [ werewolfImage, setWerewolfImage ] : React.ComponentState = useState(werewolf);
   const [ getWeaponNumber, setGetWeaponNumber ] : React.ComponentState = useState(0);
   const [ topPosGun, setTopPosGun ] : React.ComponentState = useState(0);
   const [ leftPosGun, setLeftPosGun ] : React.ComponentState = useState(0);
@@ -30,12 +34,12 @@ const GameComponent : React.FC = () => {
   const [ bottomWereWolfPressed, setBottomWereWolfPressed ] : React.ComponentState = useState(false);
   const [ leftWereWolfPressed, setLeftWereWolfPressed ] : React.ComponentState = useState(false);
   const [ rightWereWolfPressed, setRightWereWolfPressed ] : React.ComponentState = useState(false);
-  const [ gameTime, setGameTime ] : React.ComponentState = useState(0);
-  const [ gameTimeWithGun, setGameTimeWithGun ] : React.ComponentState = useState(0);
+  const [ gameTime, setGameTime ] : React.ComponentState = useState(11);
+  const [ gameTimeWithSword, setGameTimeWithSword ] : React.ComponentState = useState(0);
   const [ showTimeMessageNumber, setShowTimeMessageNumber ] : React.ComponentState = useState(0);
-  const [ showGunNumber, setShowGunNumber ] : React.ComponentState = useState(0);
+  const [ showSwordNumber, setShowSwordNumber ] : React.ComponentState = useState(0);
   const [ restartNumber, setRestartNumber ] : React.ComponentState = useState(0);
-  const [ galahadZIndex, setGalahadZIndex ] : React.ComponentState = useState(0);
+  const [ galahadZIndex, setGalahadZIndex ] : React.ComponentState = useState(5);
 
 
   const moveGalahad = (e : any) => {
@@ -194,9 +198,21 @@ const GameComponent : React.FC = () => {
       topWereWolfPressed === true || bottomWereWolfPressed === true || leftWereWolfPressed === true || rightGalahadPressed === true) {
       if(wereWolfTopPos >= (topPos - 55) && wereWolfTopPos <= (topPos + 55)) {
         if(wereWolfLeftPos >= (leftPos - 38) && wereWolfLeftPos <= (leftPos + 38) && restartNumber < 1) {
-          alert('Galahad is dead');
-          setRestartNumber(restartNumber + 1);
-          document.location.reload();
+          if(getWeaponNumber === 0) {
+            setWerewolfImage(werewolfImage);
+            alert('Galahad is dead');
+            setRestartNumber(restartNumber + 1);
+            document.location.reload();
+          } else {
+            setWerewolfImage(deadWerewolf);
+            if(restartNumber < 1) {
+              setTimeout(() => {
+                alert('Werewolf is dead');
+                document.location.reload();
+              }, 1000);
+            }
+            setRestartNumber(restartNumber + 1);
+          }
         }
       }
     }
@@ -207,37 +223,38 @@ const GameComponent : React.FC = () => {
   //weapon useEffect
   useEffect(() => {
     if(gameTime >= 12 && getWeaponNumber === 0) {
-      setShowGunNumber(1);
+      setShowSwordNumber(1);
       if(topPos >= (topPosGun - 50) && topPos <= (topPosGun + 30)) {
         if(leftPos >= (leftPosGun - 30) && leftPos <= (leftPosGun + 45)) {
           setGetWeaponNumber(1);
-          setShowGunNumber(0);
+          setShowSwordNumber(0);
         }
       }
     } else {
-      setShowGunNumber(0);
+      setShowSwordNumber(0);
     }
 
     if(getWeaponNumber === 1) {
-      if(gameTimeWithGun <= 5) {
+      if(gameTimeWithSword <= 12) {
         setTimeout(() => {
-          setGameTimeWithGun(gameTimeWithGun + 1);
+          setGameTimeWithSword(gameTimeWithSword + 1);
         }, 1000);
       }
-      setGalahadImage(galahadWithGun);
+      setGalahadImage(galahadWithSword);
       setShowTimeMessageNumber(2);
       setGalahadZIndex(9999999);
-      if(gameTimeWithGun >= 5) {
+      if(gameTimeWithSword >= 12) {
         setGameTime(0);
         setShowTimeMessageNumber(0);
         setGetWeaponNumber(0);
       }
     } else {
-      setGameTimeWithGun(0);
+      setGameTimeWithSword(0);
       setGalahadImage(galahad);
-      setGalahadZIndex(0);
+      setGalahadZIndex(5);
     }
   });
+
 
 
   const ShowGame = () => {
@@ -247,12 +264,12 @@ const GameComponent : React.FC = () => {
         <GameTimerParagraph>
           { showTimeMessageNumber === 0 ? `Timer: ${gameTime} seconds` : null }
           { showTimeMessageNumber === 1 ? <span>Time to kill Werewolf</span> : null }
-          { showTimeMessageNumber === 2 ? `Timer with gun: ${gameTimeWithGun} seconds` : null }
+          { showTimeMessageNumber === 2 ? `Timer with sword: ${gameTimeWithSword} seconds` : null }
         </GameTimerParagraph>
         <GameArena>
           <GameCharacter style={{left: leftPos, top: topPos, zIndex: galahadZIndex}} src={galahadImage} alt="Galahad" />
-          <GameCharacter style={{left: wereWolfLeftPos, top: wereWolfTopPos}} src={werewolf} alt="Werewolf" />
-          { showGunNumber === 1 ? <GameGunImage style={{left: leftPosGun, top: topPosGun, zIndex: 0}} src={gun} alt="gun"/> : null }
+          <GameCharacter style={{left: wereWolfLeftPos, top: wereWolfTopPos, zIndex: 10}} src={werewolfImage} alt="Werewolf" />
+          { showSwordNumber === 1 ? <GameSwordImage style={{left: leftPosGun, top: topPosGun, zIndex: 0}} src={sword} alt="Sword"/> : null }
         </GameArena>
       </>
     );
@@ -297,7 +314,9 @@ const GameComponent : React.FC = () => {
               sessionStorage.setItem('werewolf_posY', JSON.stringify(wereWolfPosY));
               sessionStorage.setItem('werewolf_posX', JSON.stringify(wereWolfPosX));
 
-              alert('W/A/S/D - Werewolf; Arrows - Galahad!');
+              alert('W/A/S/D - Werewolf; Arrows - Galahad! \n' +
+                'After 12 seconds, Galahad can pick up the sword! \n' +
+                'You can kill Werewolf!');
 
               setShowContentNumber('2');
             }}>Start</StartGame>
