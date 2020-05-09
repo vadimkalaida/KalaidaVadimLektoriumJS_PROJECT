@@ -34,7 +34,7 @@ const GameComponent : React.FC = () => {
   const [ bottomWereWolfPressed, setBottomWereWolfPressed ] : React.ComponentState = useState(false);
   const [ leftWereWolfPressed, setLeftWereWolfPressed ] : React.ComponentState = useState(false);
   const [ rightWereWolfPressed, setRightWereWolfPressed ] : React.ComponentState = useState(false);
-  const [ gameTime, setGameTime ] : React.ComponentState = useState(11);
+  const [ gameTime, setGameTime ] : React.ComponentState = useState(0);
   const [ gameTimeWithSword, setGameTimeWithSword ] : React.ComponentState = useState(0);
   const [ showTimeMessageNumber, setShowTimeMessageNumber ] : React.ComponentState = useState(0);
   const [ showSwordNumber, setShowSwordNumber ] : React.ComponentState = useState(0);
@@ -71,6 +71,7 @@ const GameComponent : React.FC = () => {
       setRightGalahadPressed(false);
     }
   };
+
   const moveWereWolf = (e : any) => {
     if(e.keyCode === 87) {
       setTopWereWolfPressed(true);
@@ -120,16 +121,13 @@ const GameComponent : React.FC = () => {
   }, [ gameTime, showContentNumber ]);
 
 
-  // control useEffect
+  // control Galahad useEffect
   useEffect(() => {
     let unsortedPosY : any = sessionStorage.getItem('posY');
     let topPos = JSON.parse(unsortedPosY);
     let unsortedPosX : any = sessionStorage.getItem('posX');
     let leftPos = JSON.parse(unsortedPosX);
-    let unsortedWereWolfPosY : any = sessionStorage.getItem('werewolf_posY');
-    let wereWolfTopPos = JSON.parse(unsortedWereWolfPosY);
-    let unsortedWereWolfPosX : any = sessionStorage.getItem('werewolf_posX');
-    let wereWolfLeftPos = JSON.parse(unsortedWereWolfPosX);
+
 
     if(topGalahadPressed === true) {
       if(topPos > 9) {
@@ -160,27 +158,39 @@ const GameComponent : React.FC = () => {
     document.addEventListener("keyup", notMoveGalahad, false);
 
 
+
+  }, [ topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed ]);
+
+
+  //control Werewolf useEffect
+  useEffect(() => {
+
+    let unsortedWereWolfPosY : any = sessionStorage.getItem('werewolf_posY');
+    let wereWolfTopPos = JSON.parse(unsortedWereWolfPosY);
+    let unsortedWereWolfPosX : any = sessionStorage.getItem('werewolf_posX');
+    let wereWolfLeftPos = JSON.parse(unsortedWereWolfPosX);
+
     if(topWereWolfPressed === true) {
-      if(wereWolfTopPos > 9) {
-        wereWolfTopPos -= 10;
+      if(wereWolfTopPos > 12) {
+        wereWolfTopPos -= 13;
         sessionStorage.setItem('werewolf_posY', wereWolfTopPos);
       }
     }
     if(bottomWereWolfPressed === true) {
-      if(wereWolfTopPos < 624) {
-        wereWolfTopPos += 10;
+      if(wereWolfTopPos < 622) {
+        wereWolfTopPos += 13;
         sessionStorage.setItem('werewolf_posY', wereWolfTopPos);
       }
     }
     if(leftWereWolfPressed === true) {
-      if(wereWolfLeftPos > 9) {
-        wereWolfLeftPos -= 10;
+      if(wereWolfLeftPos > 12) {
+        wereWolfLeftPos -= 13;
         sessionStorage.setItem('werewolf_posX', wereWolfLeftPos);
       }
     }
     if(rightWereWolfPressed === true) {
-      if(wereWolfLeftPos < 934) {
-        wereWolfLeftPos += 10;
+      if(wereWolfLeftPos < 932) {
+        wereWolfLeftPos += 13;
         sessionStorage.setItem('werewolf_posX', wereWolfLeftPos);
       }
     }
@@ -188,7 +198,7 @@ const GameComponent : React.FC = () => {
     document.addEventListener("keydown", moveWereWolf, false);
     document.addEventListener("keyup", notMoveWereWolf, false);
 
-  }, [ topGalahadPressed, bottomGalahadPressed, leftGalahadPressed, rightGalahadPressed, topWereWolfPressed, bottomWereWolfPressed, leftWereWolfPressed, rightWereWolfPressed]);
+  }, [ topWereWolfPressed, bottomWereWolfPressed, leftWereWolfPressed, rightWereWolfPressed ]);
 
 
 
